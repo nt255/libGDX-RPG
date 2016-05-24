@@ -15,10 +15,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	private static final String CAFE_MAP = "cafe.tmx";
 
-	private boolean downFlag = false;
-	private boolean leftFlag = false;
-	private boolean rightFlag = false;
-	private boolean upFlag = false;
+	private boolean movingDown = false;
+	private boolean movingLeft = false;
+	private boolean movingRight = false;
+	private boolean movingUp = false;
 
 	private TiledMapRenderer mapRenderer;
 	private OrthographicCamera camera;
@@ -50,35 +50,35 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 
-		if (downFlag)
+		if (movingDown)
 			mainCharacter.walkDown();
-		if (leftFlag)
+		if (movingLeft)
 			mainCharacter.walkLeft();
-		if (rightFlag)
+		if (movingRight)
 			mainCharacter.walkRight();
-		if (upFlag)
+		if (movingUp)
 			mainCharacter.walkUp();
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.DOWN)
-			downFlag = true;
+			movingDown = true;
 		if (keycode == Input.Keys.LEFT)
-			leftFlag = true;
+			movingLeft = true;
 		if (keycode == Input.Keys.RIGHT)
-			rightFlag = true;
+			movingRight = true;
 		if (keycode == Input.Keys.UP)
-			upFlag = true;
+			movingUp = true;
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		downFlag = false;
-		leftFlag = false;
-		rightFlag = false;
-		upFlag = false;
+		movingDown = false;
+		movingLeft = false;
+		movingRight = false;
+		movingUp = false;
 		return false;
 	}
 
