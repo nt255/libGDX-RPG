@@ -14,52 +14,78 @@ public class MainCharacter {
 	private static final float FRAME_DURATION = 0.25f;
 
 	private float stateTime;
+	private SpriteBatch spriteBatch;
+
+	private TextureRegion downFrame;
+	private TextureRegion leftFrame;
+	private TextureRegion rightFrame;
+	private TextureRegion upFrame;
 
 	private Animation downAnimation;
 	private Animation leftAnimation;
 	private Animation rightAnimation;
 	private Animation upAnimation;
 
-	private SpriteBatch spriteBatch;
-	private TextureRegion currentFrame;
-
 	public MainCharacter() {
 		stateTime = 0f;
+		spriteBatch = new SpriteBatch();
 
 		Texture t = new Texture(Gdx.files.internal(ANIMATION_SHEET));
 		TextureRegion[][] frames = TextureRegion.split(t, 
 				t.getWidth() / SHEET_COLUMNS, t.getHeight() / SHEET_ROWS);
 
+		downFrame  = frames[0][0];
+		leftFrame  = frames[1][0];
+		rightFrame = frames[2][0];
+		upFrame    = frames[3][0];
+
 		downAnimation  = new Animation(FRAME_DURATION, frames[0]);
 		leftAnimation  = new Animation(FRAME_DURATION, frames[1]);
 		rightAnimation = new Animation(FRAME_DURATION, frames[2]);
 		upAnimation    = new Animation(FRAME_DURATION, frames[3]);
-
-		spriteBatch = new SpriteBatch();
 	}
 
-	private void render(Animation a) {
-		stateTime += Gdx.graphics.getDeltaTime();
-		currentFrame = a.getKeyFrame(stateTime, true);
+	private void render(TextureRegion t) {
 		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, 300, 100);
+		spriteBatch.draw(t, 300, 100);
 		spriteBatch.end();
 	}
 
+	private void renderMovement(Animation a) {
+		stateTime += Gdx.graphics.getDeltaTime();
+		render(a.getKeyFrame(stateTime, true));
+	}
+
+	public void faceDown() {
+		render(downFrame);
+	}
+
+	public void faceLeft() {
+		render(leftFrame);
+	}
+
+	public void faceRight() {
+		render(rightFrame);
+	}
+
+	public void faceUp() {
+		render(upFrame);
+	}
+
 	public void walkDown() {
-		render(downAnimation);
+		renderMovement(downAnimation);
 	}
 
 	public void walkLeft() {
-		render(leftAnimation);
+		renderMovement(leftAnimation);
 	}
 
 	public void walkRight() {
-		render(rightAnimation);
+		renderMovement(rightAnimation);
 	}
 
 	public void walkUp() {
-		render(upAnimation);
+		renderMovement(upAnimation);
 	}
 
 }

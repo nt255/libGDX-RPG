@@ -15,6 +15,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	private static final String CAFE_MAP = "cafe.tmx";
 
+	private boolean facingDown = true; // faces down by default
+	private boolean facingLeft = false;
+	private boolean facingRight = false;
+	private boolean facingUp = false;
+
 	private boolean movingDown = false;
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
@@ -50,18 +55,32 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 
-		if (movingDown)
+		if (facingDown)
+			mainCharacter.faceDown();
+		else if (facingLeft)
+			mainCharacter.faceLeft();
+		else if (facingRight)
+			mainCharacter.faceRight();
+		else if (facingUp)
+			mainCharacter.faceUp();
+
+		else if (movingDown)
 			mainCharacter.walkDown();
-		if (movingLeft)
+		else if (movingLeft)
 			mainCharacter.walkLeft();
-		if (movingRight)
+		else if (movingRight)
 			mainCharacter.walkRight();
-		if (movingUp)
+		else if (movingUp)
 			mainCharacter.walkUp();
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
+		facingDown = false;
+		facingLeft = false;
+		facingRight = false;
+		facingUp = false;
+
 		if (keycode == Input.Keys.DOWN)
 			movingDown = true;
 		if (keycode == Input.Keys.LEFT)
@@ -75,6 +94,15 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		if (keycode == Input.Keys.DOWN)
+			facingDown = true;
+		if (keycode == Input.Keys.LEFT)
+			facingLeft = true;
+		if (keycode == Input.Keys.RIGHT)
+			facingRight = true;
+		if (keycode == Input.Keys.UP)
+			facingUp = true;
+
 		movingDown = false;
 		movingLeft = false;
 		movingRight = false;
