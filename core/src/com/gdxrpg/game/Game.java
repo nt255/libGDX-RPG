@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -38,8 +39,13 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		int w = Gdx.graphics.getWidth();
 		int h = Gdx.graphics.getHeight();
 
+		TiledMapTileLayer l = (TiledMapTileLayer) m.getLayers().get(0);
+
+		float mapWidth = l.getWidth() * l.getTileWidth();
+		float mapHeight = l.getHeight() * l.getTileHeight();
+
 		camera = new OrthographicCamera(w, h);
-		camera.translate(w/2f, h/2f);
+		camera.translate(mapWidth/2, mapHeight/2);
 		camera.update();
 
 		mainCharacter = new MainCharacter();
