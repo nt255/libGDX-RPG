@@ -18,6 +18,15 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	private static final String CAFE_MAP = "cafe.tmx";
 
+	private static final float BG_COLOR_RED   = 0.1f;
+	private static final float BG_COLOR_GREEN = 0.1f;
+	private static final float BG_COLOR_BLUE  = 0.1f;
+	private static final float BG_COLOR_ALPHA = 1.0f;
+
+	private static final float CROP_PX_SIDE   = 23f;
+	private static final float CROP_PX_TOP    = 17f;
+	private static final float CROP_PX_BOTTOM = 16f;
+
 	private boolean facingDown = true; // faces down by default
 	private boolean facingLeft = false;
 	private boolean facingRight = false;
@@ -57,7 +66,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.setColor(0.1f, 0.1f, 0.1f, 1);
+		shapeRenderer.setColor(BG_COLOR_RED, BG_COLOR_GREEN,
+				BG_COLOR_BLUE, BG_COLOR_ALPHA);
 
 		mainCharacter = new MainCharacter();
 
@@ -66,16 +76,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+		Gdx.gl.glClearColor(BG_COLOR_RED, BG_COLOR_GREEN,
+				BG_COLOR_BLUE, BG_COLOR_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		mapRenderer.render();
 
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.rect(0, 0, 21, mapHeight);
-		shapeRenderer.rect(0, 0, mapWidth, 20);
-		shapeRenderer.rect(mapWidth, 0, -21, mapHeight);
-		shapeRenderer.rect(0, mapHeight, mapWidth, -14);
+		shapeRenderer.rect(0, 0, CROP_PX_SIDE, mapHeight);
+		shapeRenderer.rect(0, 0, mapWidth, CROP_PX_BOTTOM);
+		shapeRenderer.rect(mapWidth, 0, -CROP_PX_SIDE, mapHeight);
+		shapeRenderer.rect(0, mapHeight, mapWidth, -CROP_PX_TOP);
 		shapeRenderer.end();
 
 		if (facingDown)
