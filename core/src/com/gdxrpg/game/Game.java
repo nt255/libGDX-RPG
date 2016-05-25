@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -26,27 +28,36 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private boolean movingRight = false;
 	private boolean movingUp = false;
 
-	private TiledMapRenderer mapRenderer;
+	private float mapWidth;
+	private float mapHeight;
+
 	private OrthographicCamera camera;
+	private TiledMapRenderer mapRenderer;
+	private ShapeRenderer shapeRenderer;
 
 	private MainCharacter mainCharacter;
 
 	@Override
 	public void create () {
 		TiledMap m = new TmxMapLoader().load(CAFE_MAP);
-		mapRenderer = new OrthogonalTiledMapRenderer(m);
+		TiledMapTileLayer l = (TiledMapTileLayer) m.getLayers().get(0);
+
+		mapWidth = l.getWidth() * l.getTileWidth();
+		mapHeight = l.getHeight() * l.getTileHeight();
 
 		int w = Gdx.graphics.getWidth();
 		int h = Gdx.graphics.getHeight();
 
-		TiledMapTileLayer l = (TiledMapTileLayer) m.getLayers().get(0);
-
-		float mapWidth = l.getWidth() * l.getTileWidth();
-		float mapHeight = l.getHeight() * l.getTileHeight();
-
 		camera = new OrthographicCamera(w, h);
 		camera.translate(mapWidth/2, mapHeight/2);
 		camera.update();
+
+		mapRenderer = new OrthogonalTiledMapRenderer(m);
+		mapRenderer.setView(camera);
+
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(0.1f, 0.1f, 0.1f, 1);
 
 		mainCharacter = new MainCharacter();
 
@@ -55,11 +66,17 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		mapRenderer.setView(camera);
 		mapRenderer.render();
+
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.rect(0, 0, 21, mapHeight);
+		shapeRenderer.rect(0, 0, mapWidth, 20);
+		shapeRenderer.rect(mapWidth, 0, -21, mapHeight);
+		shapeRenderer.rect(0, mapHeight, mapWidth, -14);
+		shapeRenderer.end();
 
 		if (facingDown)
 			mainCharacter.faceDown();
