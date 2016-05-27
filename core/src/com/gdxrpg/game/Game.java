@@ -50,40 +50,66 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			mainCharacter.walkUp();
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
+	private void setMoving() {
 		facingDown = false;
 		facingLeft = false;
 		facingRight = false;
 		facingUp = false;
+	}
 
-		if (keycode == Input.Keys.DOWN)
+	@Override
+	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.S) {
+			setMoving();
 			movingDown = true;
-		if (keycode == Input.Keys.LEFT)
+		}
+		if (keycode == Input.Keys.A) {
+			setMoving();
 			movingLeft = true;
-		if (keycode == Input.Keys.RIGHT)
+		}
+		if (keycode == Input.Keys.D) {
+			setMoving();
 			movingRight = true;
-		if (keycode == Input.Keys.UP)
+		}
+		if (keycode == Input.Keys.W) {
+			setMoving();
 			movingUp = true;
+		}
 
 		return false;
 	}
 
+	private boolean notMoving() {
+		return !movingDown && !movingLeft
+				&& !movingRight && !movingUp;
+	}
+
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Input.Keys.DOWN)
-			facingDown = true;
-		if (keycode == Input.Keys.LEFT)
-			facingLeft = true;
-		if (keycode == Input.Keys.RIGHT)
-			facingRight = true;
-		if (keycode == Input.Keys.UP)
-			facingUp = true;
-
-		movingDown = false;
-		movingLeft = false;
-		movingRight = false;
-		movingUp = false;
+		if (keycode == Input.Keys.S) {
+			movingDown = false;
+			if (notMoving()) {
+				facingDown = true;
+			}
+		}
+		if (keycode == Input.Keys.A) {
+			movingLeft = false;
+			if (notMoving()) {
+				facingLeft = true;
+			}
+		}
+		if (keycode == Input.Keys.D) {
+			movingRight = false;
+			if (notMoving()) {
+				facingRight = true;
+			}
+		}
+		if (keycode == Input.Keys.W) {
+			movingUp = false;
+			if (notMoving()) {
+				facingUp = true;
+			}
+		}
 
 		return false;
 	}
