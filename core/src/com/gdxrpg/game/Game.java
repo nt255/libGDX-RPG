@@ -40,14 +40,22 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		else if (facingUp)
 			mainCharacter.faceUp();
 
-		else if (movingDown)
+		else if (movingDown) {
 			mainCharacter.walkDown();
-		else if (movingLeft)
+			mainCharacter.changePosition(0, -1);
+		}
+		else if (movingLeft) {
 			mainCharacter.walkLeft();
-		else if (movingRight)
+			mainCharacter.changePosition(-1, 0);
+		}
+		else if (movingRight) {
 			mainCharacter.walkRight();
-		else if (movingUp)
+			mainCharacter.changePosition(1, 0);
+		}
+		else if (movingUp) {
 			mainCharacter.walkUp();
+			mainCharacter.changePosition(0, 1);
+		}
 	}
 
 	private void setMoving() {
@@ -88,27 +96,23 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	public boolean keyUp(int keycode) {
 		if (keycode == Input.Keys.S) {
 			movingDown = false;
-			if (notMoving()) {
+			if (notMoving())
 				facingDown = true;
-			}
 		}
 		if (keycode == Input.Keys.A) {
 			movingLeft = false;
-			if (notMoving()) {
+			if (notMoving())
 				facingLeft = true;
-			}
 		}
 		if (keycode == Input.Keys.D) {
 			movingRight = false;
-			if (notMoving()) {
+			if (notMoving())
 				facingRight = true;
-			}
 		}
 		if (keycode == Input.Keys.W) {
 			movingUp = false;
-			if (notMoving()) {
+			if (notMoving())
 				facingUp = true;
-			}
 		}
 
 		return false;

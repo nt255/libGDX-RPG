@@ -26,6 +26,9 @@ public class MainCharacter {
 	private Animation rightAnimation;
 	private Animation upAnimation;
 
+	private float x;
+	private float y;
+
 	public MainCharacter() {
 		stateTime = 0f;
 		spriteBatch = new SpriteBatch();
@@ -43,17 +46,25 @@ public class MainCharacter {
 		leftAnimation  = new Animation(FRAME_DURATION, frames[1]);
 		rightAnimation = new Animation(FRAME_DURATION, frames[2]);
 		upAnimation    = new Animation(FRAME_DURATION, frames[3]);
+
+		x = 300;
+		y = 100;
 	}
 
 	private void render(TextureRegion t) {
 		spriteBatch.begin();
-		spriteBatch.draw(t, 300, 100);
+		spriteBatch.draw(t, x, y);
 		spriteBatch.end();
 	}
 
 	private void renderMovement(Animation a) {
 		stateTime += Gdx.graphics.getDeltaTime();
 		render(a.getKeyFrame(stateTime, true));
+	}
+
+	public void changePosition(float x, float y) {
+		this.x += x;
+		this.y += y;
 	}
 
 	public void faceDown() {
