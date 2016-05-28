@@ -1,4 +1,4 @@
-package com.gdxrpg.game;
+package com.gdxrpg.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,8 +10,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.gdxrpg.game.model.Map;
 
-public class GameMapRenderer {
+public class MapRenderer {
 
 	private static final String CAFE_MAP = "cafe.tmx";
 
@@ -31,7 +32,12 @@ public class GameMapRenderer {
 	private TiledMapRenderer mapRenderer;
 	private ShapeRenderer shapeRenderer;
 
-	public GameMapRenderer() {
+	@SuppressWarnings("unused")
+	private Map map;
+
+	public MapRenderer(Map map) {
+		this.map = map;
+
 		TiledMap m = new TmxMapLoader().load(CAFE_MAP);
 		TiledMapTileLayer l = (TiledMapTileLayer) m.getLayers().get(0);
 

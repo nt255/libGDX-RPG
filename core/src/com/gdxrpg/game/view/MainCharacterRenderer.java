@@ -1,12 +1,13 @@
-package com.gdxrpg.game;
+package com.gdxrpg.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.gdxrpg.game.model.MainCharacter;
 
-public class MainCharacter {
+public class MainCharacterRenderer {
 
 	private static final String ANIMATION_SHEET = "pirate_m1.png";
 	private static final int SHEET_COLUMNS = 4;
@@ -26,10 +27,11 @@ public class MainCharacter {
 	private Animation rightAnimation;
 	private Animation upAnimation;
 
-	private float x;
-	private float y;
+	private MainCharacter mainCharacter;
 
-	public MainCharacter() {
+	public MainCharacterRenderer(MainCharacter mainCharacter) {
+		this.mainCharacter = mainCharacter;
+
 		stateTime = 0f;
 		spriteBatch = new SpriteBatch();
 
@@ -46,57 +48,37 @@ public class MainCharacter {
 		leftAnimation  = new Animation(FRAME_DURATION, frames[1]);
 		rightAnimation = new Animation(FRAME_DURATION, frames[2]);
 		upAnimation    = new Animation(FRAME_DURATION, frames[3]);
-
-		x = 300;
-		y = 100;
 	}
 
-	private void render(TextureRegion t) {
+	private void renderFrame(TextureRegion t) {
 		spriteBatch.begin();
-		spriteBatch.draw(t, x, y);
+		spriteBatch.draw(t, mainCharacter.getX(), mainCharacter.getY());
 		spriteBatch.end();
 	}
 
 	private void renderMovement(Animation a) {
 		stateTime += Gdx.graphics.getDeltaTime();
-		render(a.getKeyFrame(stateTime, true));
+		renderFrame(a.getKeyFrame(stateTime, true));
 	}
 
-	public void changePosition(float x, float y) {
-		this.x += x;
-		this.y += y;
-	}
+	public void render() {
+		if (mainCharacter.isFacingDown())
+			renderFrame(downFrame);
+		else if (mainCharacter.isFacingLeft())
+			renderFrame(leftFrame);
+		else if (mainCharacter.isFacingRight())
+			renderFrame(rightFrame);
+		else if (mainCharacter.isFacingUp())
+			renderFrame(upFrame);
 
-	public void faceDown() {
-		render(downFrame);
-	}
-
-	public void faceLeft() {
-		render(leftFrame);
-	}
-
-	public void faceRight() {
-		render(rightFrame);
-	}
-
-	public void faceUp() {
-		render(upFrame);
-	}
-
-	public void walkDown() {
-		renderMovement(downAnimation);
-	}
-
-	public void walkLeft() {
-		renderMovement(leftAnimation);
-	}
-
-	public void walkRight() {
-		renderMovement(rightAnimation);
-	}
-
-	public void walkUp() {
-		renderMovement(upAnimation);
+		else if (mainCharacter.isMovingDown())
+			renderMovement(downAnimation);
+		else if (mainCharacter.isMovingLeft())
+			renderMovement(leftAnimation);
+		else if (mainCharacter.isMovingRight())
+			renderMovement(rightAnimation);
+		else if (mainCharacter.isMovingUp())
+			renderMovement(upAnimation);
 	}
 
 }
