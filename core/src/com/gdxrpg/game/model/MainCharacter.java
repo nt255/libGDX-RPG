@@ -1,5 +1,7 @@
 package com.gdxrpg.game.model;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class MainCharacter {
 
 	private boolean facingDown = true; // faces down by default
@@ -7,22 +9,18 @@ public class MainCharacter {
 	private boolean facingRight = false;
 	private boolean facingUp = false;
 
-	private boolean movingDown = false;
-	private boolean movingLeft = false;
-	private boolean movingRight = false;
-	private boolean movingUp = false;
-
-	private float x;
-	private float y;
+	private Vector2 position;
+	private Vector2 velocity;
+	private Vector2 velocityNor;
 
 	protected MainCharacter(float x, float y) {
-		this.x = x;
-		this.y = y;
+		position = new Vector2(x, y);
+		velocity = Vector2.Zero;
+		velocityNor = Vector2.Zero;
 	}
 
-	protected void changePosition(float x, float y) {
-		this.x += x;
-		this.y += y;
+	protected void updatePosition() {
+		position.add(velocityNor);
 	}
 
 	private void setMoving() {
@@ -33,52 +31,43 @@ public class MainCharacter {
 	}
 
 	private boolean isNotMoving() {
-		return !movingDown && !movingLeft
-				&& !movingRight && !movingUp;
+		return velocity.isZero();
 	}
 
-	public void setMovingDown() {
-		setMoving();
-		movingDown = true;
-	}
-
-	public void setMovingLeft() {
-		setMoving();
-		movingLeft = true;
-	}
-
-	public void setMovingRight() {
-		setMoving();
-		movingRight = true;
-	}
-
-	public void setMovingUp() {
-		setMoving();
-		movingUp = true;
-	}
-
-	public void unsetMovingDown() {
-		movingDown = false;
-		if (isNotMoving())
-			facingDown = true;
-	}
-
-	public void unsetMovingLeft() {
-		movingLeft = false;
-		if (isNotMoving())
-			facingLeft = true;
-	}
-
-	public void unsetMovingRight() {
-		movingRight = false;
-		if (isNotMoving())
-			facingRight = true;
-	}
-
-	public void unsetMovingUp() {
-		movingUp = false;
+	public void accelerateDown() {
+		velocity.add(0, -1);
+		velocityNor = new Vector2(velocity).nor();
 		if (isNotMoving())
 			facingUp = true;
+		else
+			setMoving();
+	}
+
+	public void accelerateLeft() {
+		velocity.add(-1, 0);
+		velocityNor = new Vector2(velocity).nor();
+		if (isNotMoving())
+			facingRight = true;
+		else
+			setMoving();
+	}
+
+	public void accelerateRight() {
+		velocity.add(1, 0);
+		velocityNor = new Vector2(velocity).nor();
+		if (isNotMoving())
+			facingLeft = true;
+		else
+			setMoving();
+	}
+
+	public void accelerateUp() {
+		velocity.add(0, 1);
+		velocityNor = new Vector2(velocity).nor();
+		if (isNotMoving())
+			facingDown = true;
+		else
+			setMoving();
 	}
 
 	public boolean isFacingDown() {
@@ -98,27 +87,27 @@ public class MainCharacter {
 	}
 
 	public boolean isMovingDown() {
-		return movingDown;
+		return velocity.y < 0;
 	}
 
 	public boolean isMovingLeft() {
-		return movingLeft;
+		return velocity.x < 0;
 	}
 
 	public boolean isMovingRight() {
-		return movingRight;
+		return velocity.x > 0;
 	}
 
 	public boolean isMovingUp() {
-		return movingUp;
+		return velocity.y > 0;
 	}
 
 	public float getX() {
-		return x;
+		return position.x;
 	}
 
 	public float getY() {
-		return y;
+		return position.y;
 	}
 
 }

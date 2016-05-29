@@ -71,12 +71,12 @@ public class MainCharacterRenderer {
 		else if (mainCharacter.isFacingUp())
 			renderFrame(upFrame);
 
-		else if (mainCharacter.isMovingDown())
-			renderMovement(downAnimation);
 		else if (mainCharacter.isMovingLeft())
 			renderMovement(leftAnimation);
 		else if (mainCharacter.isMovingRight())
 			renderMovement(rightAnimation);
+		else if (mainCharacter.isMovingDown())
+			renderMovement(downAnimation);
 		else if (mainCharacter.isMovingUp())
 			renderMovement(upAnimation);
 	}

@@ -16,26 +16,26 @@ public class MovementInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.S)
-			mainCharacter.setMovingDown();
+			mainCharacter.accelerateDown();
 		if (keycode == Input.Keys.A) 
-			mainCharacter.setMovingLeft();
+			mainCharacter.accelerateLeft();
 		if (keycode == Input.Keys.D) 
-			mainCharacter.setMovingRight();
+			mainCharacter.accelerateRight();
 		if (keycode == Input.Keys.W) 
-			mainCharacter.setMovingUp();
+			mainCharacter.accelerateUp();
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Input.Keys.S)
-			mainCharacter.unsetMovingDown();
+			mainCharacter.accelerateUp();
 		if (keycode == Input.Keys.A) 
-			mainCharacter.unsetMovingLeft();
+			mainCharacter.accelerateRight();
 		if (keycode == Input.Keys.D) 
-			mainCharacter.unsetMovingRight();
+			mainCharacter.accelerateLeft();
 		if (keycode == Input.Keys.W) 
-			mainCharacter.unsetMovingUp();
+			mainCharacter.accelerateDown();
 		return false;
 	}
 

@@ -11,14 +11,7 @@ public class GameModel {
 	}
 
 	public void update() {
-		if (mainCharacter.isMovingDown())
-			mainCharacter.changePosition(0, -1);
-		else if (mainCharacter.isMovingLeft())
-			mainCharacter.changePosition(-1, 0);
-		else if (mainCharacter.isMovingRight())
-			mainCharacter.changePosition(1, 0);
-		else if (mainCharacter.isMovingUp())
-			mainCharacter.changePosition(0, 1);
+		mainCharacter.updatePosition();
 	}
 
 	public Map getMap() {
