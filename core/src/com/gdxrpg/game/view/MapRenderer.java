@@ -5,16 +5,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.gdxrpg.game.model.Map;
 
 public class MapRenderer {
-
-	private static final String CAFE_MAP = "cafe.tmx";
 
 	private static final float BG_COLOR_RED   = 0.1f;
 	private static final float BG_COLOR_GREEN = 0.1f;
@@ -25,33 +20,23 @@ public class MapRenderer {
 	private static final float CROP_PX_TOP    = 17f;
 	private static final float CROP_PX_BOTTOM = 16f;
 
-	private float mapWidth;
-	private float mapHeight;
-
 	private OrthographicCamera camera;
 	private TiledMapRenderer mapRenderer;
 	private ShapeRenderer shapeRenderer;
 
-	@SuppressWarnings("unused")
 	private Map map;
 
 	public MapRenderer(Map map) {
 		this.map = map;
 
-		TiledMap m = new TmxMapLoader().load(CAFE_MAP);
-		TiledMapTileLayer l = (TiledMapTileLayer) m.getLayers().get(0);
-
-		mapWidth = l.getWidth() * l.getTileWidth();
-		mapHeight = l.getHeight() * l.getTileHeight();
-
 		int w = Gdx.graphics.getWidth();
 		int h = Gdx.graphics.getHeight();
 
 		camera = new OrthographicCamera(w, h);
-		camera.translate(mapWidth/2, mapHeight/2);
+		camera.translate(this.map.getWidth() / 2, this.map.getHeight() / 2);
 		camera.update();
 
-		mapRenderer = new OrthogonalTiledMapRenderer(m);
+		mapRenderer = new OrthogonalTiledMapRenderer(this.map.getTiledMap());
 		mapRenderer.setView(camera);
 
 		shapeRenderer = new ShapeRenderer();
@@ -68,10 +53,10 @@ public class MapRenderer {
 		mapRenderer.render();
 
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.rect(0, 0, CROP_PX_SIDE, mapHeight);
-		shapeRenderer.rect(0, 0, mapWidth, CROP_PX_BOTTOM);
-		shapeRenderer.rect(mapWidth, 0, -CROP_PX_SIDE, mapHeight);
-		shapeRenderer.rect(0, mapHeight, mapWidth, -CROP_PX_TOP);
+		shapeRenderer.rect(0, 0, CROP_PX_SIDE, map.getHeight());
+		shapeRenderer.rect(0, 0, map.getWidth(), CROP_PX_BOTTOM);
+		shapeRenderer.rect(map.getWidth(), 0, -CROP_PX_SIDE, map.getHeight());
+		shapeRenderer.rect(0, map.getHeight(), map.getWidth(), -CROP_PX_TOP);
 		shapeRenderer.end();
 	}
 

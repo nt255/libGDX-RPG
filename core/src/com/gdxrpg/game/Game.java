@@ -14,10 +14,11 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		String mapName = "cafe";
 		float startingX = 300;
 		float startingY = 100;
 
-		gameModel = new GameModel(startingX, startingY);
+		gameModel = new GameModel(mapName, startingX, startingY);
 		gameRenderer = new GameRenderer(gameModel);
 		inputProcessor = new MovementInputProcessor(gameModel);
 

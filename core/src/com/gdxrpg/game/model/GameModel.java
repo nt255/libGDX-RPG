@@ -5,8 +5,8 @@ public class GameModel {
 	private Map map;
 	private MainCharacter mainCharacter;
 
-	public GameModel(float x, float y) {
-		map = new Map();
+	public GameModel(String mapName, float x, float y) {
+		map = new Map(mapName);
 		mainCharacter = new MainCharacter(x, y);
 	}
 
