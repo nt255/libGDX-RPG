@@ -1,5 +1,6 @@
 package com.gdxrpg.game.view;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.gdxrpg.game.model.GameModel;
 
 public class GameRenderer {
@@ -9,8 +10,10 @@ public class GameRenderer {
 
 	public GameRenderer(GameModel gameModel) {
 		mapRenderer = new MapRenderer(gameModel.getMap());
+
+		OrthographicCamera camera = mapRenderer.getCamera();
 		mainCharacterRenderer = 
-				new MainCharacterRenderer(gameModel.getMainCharacter());
+				new MainCharacterRenderer(camera, gameModel.getMainCharacter());
 	}
 
 	public void render() {

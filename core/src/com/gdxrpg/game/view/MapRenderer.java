@@ -60,4 +60,8 @@ public class MapRenderer {
 		shapeRenderer.end();
 	}
 
+	protected OrthographicCamera getCamera() {
+		return camera;
+	}
+
 }

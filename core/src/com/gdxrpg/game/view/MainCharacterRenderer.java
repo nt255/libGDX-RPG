@@ -1,6 +1,7 @@
 package com.gdxrpg.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,11 +30,13 @@ public class MainCharacterRenderer {
 
 	private MainCharacter mainCharacter;
 
-	public MainCharacterRenderer(MainCharacter mainCharacter) {
+	public MainCharacterRenderer(
+			OrthographicCamera camera, MainCharacter mainCharacter) {
 		this.mainCharacter = mainCharacter;
 
 		stateTime = 0f;
 		spriteBatch = new SpriteBatch();
+		spriteBatch.setProjectionMatrix(camera.combined);
 
 		Texture t = new Texture(Gdx.files.internal(ANIMATION_SHEET));
 		TextureRegion[][] frames = TextureRegion.split(t, 
