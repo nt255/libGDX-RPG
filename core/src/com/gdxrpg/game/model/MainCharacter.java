@@ -19,8 +19,16 @@ public class MainCharacter {
 		velocityNor = Vector2.Zero;
 	}
 
-	protected void updatePosition() {
-		position.add(velocityNor);
+	protected Vector2 getPosition() {
+		return position;
+	}
+
+	protected Vector2 getVelocityNor() {
+		return velocityNor;
+	}
+
+	protected void changePosition(float x, float y) {
+		this.position.add(x, y);
 	}
 
 	private void setMoving() {

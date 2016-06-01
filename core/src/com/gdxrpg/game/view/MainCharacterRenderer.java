@@ -54,8 +54,11 @@ public class MainCharacterRenderer {
 	}
 
 	private void renderFrame(TextureRegion t) {
+		float x = mainCharacter.getX() - 7;
+		float y = mainCharacter.getY() - 2;
+
 		spriteBatch.begin();
-		spriteBatch.draw(t, mainCharacter.getX(), mainCharacter.getY());
+		spriteBatch.draw(t, x, y);
 		spriteBatch.end();
 	}
 
