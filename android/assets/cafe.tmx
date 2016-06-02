@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="32" tileheight="32" nextobjectid="25">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="32" tileheight="32" nextobjectid="34">
  <tileset firstgid="1" name="wall" tilewidth="32" tileheight="32" tilecount="12" columns="3">
   <image source="cafewall.png" width="96" height="128"/>
  </tileset>
@@ -75,5 +75,7 @@
   <object id="21" x="480" y="0" width="32" height="383"/>
   <object id="22" x="32" y="0" width="448" height="94"/>
   <object id="24" x="32" y="352" width="448" height="31"/>
+  <object id="30" x="262" y="94" width="18" height="85"/>
+  <object id="32" x="282" y="144" width="191" height="35"/>
  </objectgroup>
 </map>
