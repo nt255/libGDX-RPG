@@ -21,6 +21,9 @@ public class GameModel {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
 
+		// Vector2 tilePos = map.getTile(pos);
+		// System.out.println((int) tilePos.x + ", " + (int) tilePos.y);
+
 		Vector2 newPosX = new Vector2(pos).add(vNor.x, 0);
 		Vector2 newPosY = new Vector2(pos).add(0, vNor.y);
 

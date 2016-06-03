@@ -8,11 +8,16 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Map {
 
 	private TiledMap tiledMap;
+
+	private float tilePixelWidth;
+	private float tilePixelHeight;
+
 	private float width;
 	private float height;
 
@@ -22,8 +27,11 @@ public class Map {
 		tiledMap = new TmxMapLoader().load(mapName + ".tmx");
 		TiledMapTileLayer l = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 
-		width = l.getWidth() * l.getTileWidth();
-		height = l.getHeight() * l.getTileHeight();
+		tilePixelWidth = l.getTileWidth();
+		tilePixelHeight = l.getTileHeight();
+
+		width = l.getWidth() * tilePixelWidth;
+		height = l.getHeight() * tilePixelHeight;
 
 		MapLayer collisionLayer = tiledMap.getLayers().get("collision");
 		MapObjects collisionObjects = collisionLayer.getObjects();
@@ -40,6 +48,17 @@ public class Map {
 			if (mainCharacter.overlaps(r))
 				return true;
 		return false;
+	}
+
+	/* converts pixel coordinates to tile coordinates */
+	public Vector2 getTile(Vector2 position) {
+		return getTile(position.x, position.y);
+	}
+
+	public Vector2 getTile(float x, float y) {
+		float tileX = (float) Math.floor(x / tilePixelWidth);
+		float tileY = (float) Math.floor(y / tilePixelHeight);
+		return new Vector2(tileX, tileY);
 	}
 
 	public TiledMap getTiledMap() {
