@@ -45,13 +45,23 @@ public class MapRenderer {
 				BG_COLOR_BLUE, BG_COLOR_ALPHA);
 	}
 
-	public void render() {
+	public void setGL() {
 		Gdx.gl.glClearColor(BG_COLOR_RED, BG_COLOR_GREEN,
 				BG_COLOR_BLUE, BG_COLOR_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
 
-		mapRenderer.render();
+	public void renderBackground() {
+		int[] layers = {0, 1, 2, 3};
+		mapRenderer.render(layers);
+	}
 
+	public void renderForeground() {
+		int[] layers = {4};
+		mapRenderer.render(layers);
+	}
+
+	public void renderEdges() {
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.rect(0, 0, CROP_PX_SIDE, map.getHeight());
 		shapeRenderer.rect(0, 0, map.getWidth(), CROP_PX_BOTTOM);

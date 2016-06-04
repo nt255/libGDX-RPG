@@ -17,8 +17,13 @@ public class GameRenderer {
 	}
 
 	public void render() {
-		mapRenderer.render();
+		mapRenderer.setGL();
+		mapRenderer.renderBackground();
+
 		mainCharacterRenderer.render();
+
+		mapRenderer.renderForeground();
+		mapRenderer.renderEdges();
 	}
 
 }
