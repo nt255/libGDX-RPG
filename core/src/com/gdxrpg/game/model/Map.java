@@ -25,7 +25,7 @@ public class Map {
 
 	protected Map(String mapName) {
 		tiledMap = new TmxMapLoader().load(mapName + ".tmx");
-		TiledMapTileLayer l = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+		TiledMapTileLayer l = getLayer(0);
 
 		tilePixelWidth = l.getTileWidth();
 		tilePixelHeight = l.getTileHeight();
@@ -63,6 +63,10 @@ public class Map {
 
 	public TiledMap getTiledMap() {
 		return tiledMap;
+	}
+
+	public TiledMapTileLayer getLayer(int i) {
+		return (TiledMapTileLayer) tiledMap.getLayers().get(i);
 	}
 
 	public float getWidth() {

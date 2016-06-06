@@ -1,12 +1,18 @@
 package com.gdxrpg.game.view;
 
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.gdxrpg.game.model.Map;
 
 public class MapRenderer {
@@ -52,13 +58,48 @@ public class MapRenderer {
 	}
 
 	public void renderBackground() {
-		int[] layers = {0, 1, 2, 3};
+		int[] layers = {0, 1, 2, 3, 4};
 		mapRenderer.render(layers);
 	}
 
-	public void renderForeground() {
-		int[] layers = {4};
+	private Set<Vector2> getTiles(float x, float y, int w, int h) {
+		// comparator not really necessary
+		Set<Vector2> ret = new TreeSet<Vector2>(new Comparator<Vector2>() {
+			public int compare(Vector2 v1, Vector2 v2) {
+				if (v1.equals(v2))
+					return 0;
+				if (v1.x + v1.y < v2.x + v2.y)
+					return -1;
+				return 1;
+			}
+		});
+
+		ret.add(map.getTile(x    , y    ));
+		ret.add(map.getTile(x + w, y    ));
+		ret.add(map.getTile(x    , y + h));
+		ret.add(map.getTile(x + w, y + h));
+
+		// System.out.println(ret.size());
+		return ret;
+	}
+
+	public void renderForeground(float x, float y, int w, int h) {
+		TiledMapTileLayer foregroundCells = map.getLayer(4);
+		TiledMapTileLayer foreground      = map.getLayer(5);
+
+		Set<Vector2> relevantTiles = getTiles(x, y, w, h);
+
+		for (Vector2 c : relevantTiles) {
+			int cx = (int) c.x;
+			int cy = (int) c.y;
+			foreground.setCell(cx, cy, foregroundCells.getCell(cx, cy));
+		}
+
+		int[] layers = {5};
 		mapRenderer.render(layers);
+
+		for (Vector2 c : relevantTiles)
+			foreground.setCell((int) c.x, (int) c.y, null);
 	}
 
 	public void renderEdges() {
