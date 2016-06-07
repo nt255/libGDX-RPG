@@ -4,6 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MainCharacter {
 
+	private static final float COLLISION_RECTANGLE_WIDTH = 20;
+	private static final float COLLISION_RECTANGLE_HEIGHT = 13;
+	private static final float COLLISION_SPEED = 0.7f;
+
 	private boolean facingDown = true; // faces down by default
 	private boolean facingLeft = false;
 	private boolean facingRight = false;
@@ -29,6 +33,18 @@ public class MainCharacter {
 
 	protected void changePosition(float x, float y) {
 		this.position.add(x, y);
+	}
+
+	public static float getCollisionRectangleWidth() {
+		return COLLISION_RECTANGLE_WIDTH;
+	}
+
+	public static float getCollisionRectangleHeight() {
+		return COLLISION_RECTANGLE_HEIGHT;
+	}
+
+	public static float getCollisionSpeed() {
+		return COLLISION_SPEED;
 	}
 
 	private void setMoving() {

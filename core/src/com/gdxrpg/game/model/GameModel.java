@@ -5,10 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameModel {
 
-	private static final float COLLISION_RECTANGLE_WIDTH = 20;
-	private static final float COLLISION_RECTANGLE_HEIGHT = 13;
-	private static final float COLLISION_SPEED = 0.7f;
-
 	private Map map;
 	private MainCharacter mainCharacter;
 
@@ -17,6 +13,7 @@ public class GameModel {
 		mainCharacter = new MainCharacter(x, y);
 	}
 
+	@SuppressWarnings("static-access")
 	public void update() {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
@@ -27,8 +24,8 @@ public class GameModel {
 		Vector2 newPosX = new Vector2(pos).add(vNor.x, 0);
 		Vector2 newPosY = new Vector2(pos).add(0, vNor.y);
 
-		float w = COLLISION_RECTANGLE_WIDTH;
-		float h = COLLISION_RECTANGLE_HEIGHT;
+		float w = mainCharacter.getCollisionRectangleWidth();
+		float h = mainCharacter.getCollisionRectangleHeight();
 
 		Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
 		Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
@@ -41,7 +38,8 @@ public class GameModel {
 		else if (noCollisionX)
 			mainCharacter.changePosition(vNor.x, 0);
 		else if (noCollisionY)
-			mainCharacter.changePosition(0, vNor.y * COLLISION_SPEED);
+			mainCharacter.changePosition(0,
+					vNor.y * mainCharacter.getCollisionSpeed());
 	}
 
 	public Map getMap() {

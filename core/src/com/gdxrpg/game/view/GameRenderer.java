@@ -20,6 +20,7 @@ public class GameRenderer {
 				new MainCharacterRenderer(camera, mainCharacter);
 	}
 
+	@SuppressWarnings("static-access")
 	public void render() {
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();
@@ -28,8 +29,10 @@ public class GameRenderer {
 
 		float x = mainCharacter.getX();
 		float y = mainCharacter.getY();
+		int w = (int) mainCharacter.getCollisionRectangleWidth();
+		int h = (int) mainCharacter.getCollisionRectangleHeight();
 
-		mapRenderer.renderForeground(x, y, 20, 13);
+		mapRenderer.renderForeground(x, y, w, h);
 		mapRenderer.renderEdges();
 	}
 
