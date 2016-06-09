@@ -20,7 +20,6 @@ public class GameRenderer {
 				new MainCharacterRenderer(camera, mainCharacter);
 	}
 
-	@SuppressWarnings("static-access")
 	public void render() {
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();

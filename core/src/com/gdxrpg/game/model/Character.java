@@ -38,15 +38,15 @@ public class Character {
 		this.position.add(x, y);
 	}
 
-	public static float getCollisionRectangleWidth() {
+	public float getCollisionRectangleWidth() {
 		return COLLISION_RECTANGLE_WIDTH;
 	}
 
-	public static float getCollisionRectangleHeight() {
+	public float getCollisionRectangleHeight() {
 		return COLLISION_RECTANGLE_HEIGHT;
 	}
 
-	public static float getCollisionSpeed() {
+	public float getCollisionSpeed() {
 		return COLLISION_SPEED;
 	}
 

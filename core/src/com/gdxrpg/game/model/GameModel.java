@@ -13,7 +13,6 @@ public class GameModel {
 		mainCharacter = new MainCharacter(sheet, x, y);
 	}
 
-	@SuppressWarnings("static-access")
 	public void update() {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
