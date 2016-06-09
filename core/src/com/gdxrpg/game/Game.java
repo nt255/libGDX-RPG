@@ -15,10 +15,11 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		String mapName = "cafe";
+		String sheet = "pirate_m1.png";
 		float startingX = 300;
 		float startingY = 100;
 
-		gameModel = new GameModel(mapName, startingX, startingY);
+		gameModel = new GameModel(mapName, sheet, startingX, startingY);
 		gameRenderer = new GameRenderer(gameModel);
 		inputProcessor = new MovementInputProcessor(gameModel);
 

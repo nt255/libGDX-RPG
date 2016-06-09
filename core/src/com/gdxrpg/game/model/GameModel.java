@@ -8,9 +8,9 @@ public class GameModel {
 	private Map map;
 	private MainCharacter mainCharacter;
 
-	public GameModel(String mapName, float x, float y) {
+	public GameModel(String mapName, String sheet, float x, float y) {
 		map = new Map(mapName);
-		mainCharacter = new MainCharacter(x, y);
+		mainCharacter = new MainCharacter(sheet, x, y);
 	}
 
 	@SuppressWarnings("static-access")

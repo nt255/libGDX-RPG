@@ -10,7 +10,6 @@ import com.gdxrpg.game.model.MainCharacter;
 
 public class MainCharacterRenderer {
 
-	private static final String ANIMATION_SHEET = "pirate_m1.png";
 	private static final int SHEET_COLUMNS = 4;
 	private static final int SHEET_ROWS = 4;
 	private static final float FRAME_DURATION = 0.25f;
@@ -38,7 +37,8 @@ public class MainCharacterRenderer {
 		spriteBatch = new SpriteBatch();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
-		Texture t = new Texture(Gdx.files.internal(ANIMATION_SHEET));
+		Texture t = new Texture(
+				Gdx.files.internal(mainCharacter.getAnimationSheet()));
 		TextureRegion[][] frames = TextureRegion.split(t, 
 				t.getWidth() / SHEET_COLUMNS, t.getHeight() / SHEET_ROWS);
 
