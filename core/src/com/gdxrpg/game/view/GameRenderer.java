@@ -9,22 +9,22 @@ public class GameRenderer {
 	private MapRenderer mapRenderer;
 
 	private MainCharacter mainCharacter;
-	private MainCharacterRenderer mainCharacterRenderer;
+	private CharacterRenderer characterRenderer;
 
 	public GameRenderer(GameModel gameModel) {
 		mapRenderer = new MapRenderer(gameModel.getMap());
 
 		OrthographicCamera camera = mapRenderer.getCamera();
 		mainCharacter = gameModel.getMainCharacter();
-		mainCharacterRenderer = 
-				new MainCharacterRenderer(camera, mainCharacter);
+		characterRenderer =
+				new CharacterRenderer(camera, mainCharacter);
 	}
 
 	public void render() {
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();
 
-		mainCharacterRenderer.render();
+		characterRenderer.render();
 
 		float x = mainCharacter.getX();
 		float y = mainCharacter.getY();

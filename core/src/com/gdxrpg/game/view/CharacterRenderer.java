@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gdxrpg.game.model.MainCharacter;
 
-public class MainCharacterRenderer {
+public class CharacterRenderer {
 
 	private static final int SHEET_COLUMNS = 4;
 	private static final int SHEET_ROWS = 4;
@@ -29,7 +29,7 @@ public class MainCharacterRenderer {
 
 	private MainCharacter mainCharacter;
 
-	public MainCharacterRenderer(
+	public CharacterRenderer(
 			OrthographicCamera camera, MainCharacter mainCharacter) {
 		this.mainCharacter = mainCharacter;
 
