@@ -15,7 +15,6 @@ public class CharacterRenderer {
 	private static final float FRAME_DURATION = 0.25f;
 
 	private float stateTime;
-	private SpriteBatch spriteBatch;
 
 	private TextureRegion downFrame;
 	private TextureRegion leftFrame;
@@ -34,8 +33,6 @@ public class CharacterRenderer {
 		this.mainCharacter = mainCharacter;
 
 		stateTime = 0f;
-		spriteBatch = new SpriteBatch();
-		spriteBatch.setProjectionMatrix(camera.combined);
 
 		Texture t = new Texture(
 				Gdx.files.internal(mainCharacter.getAnimationSheet()));
@@ -53,38 +50,38 @@ public class CharacterRenderer {
 		upAnimation    = new Animation(FRAME_DURATION, frames[3]);
 	}
 
-	private void renderFrame(TextureRegion t) {
+	private void renderFrame(TextureRegion t, SpriteBatch s) {
 		float x = mainCharacter.getX() - 7;
 		float y = mainCharacter.getY() - 2;
 
-		spriteBatch.begin();
-		spriteBatch.draw(t, x, y);
-		spriteBatch.end();
+		s.begin();
+		s.draw(t, x, y);
+		s.end();
 	}
 
-	private void renderMovement(Animation a) {
+	private void renderMovement(Animation a, SpriteBatch s) {
 		stateTime += Gdx.graphics.getDeltaTime();
-		renderFrame(a.getKeyFrame(stateTime, true));
+		renderFrame(a.getKeyFrame(stateTime, true), s);
 	}
 
-	public void render() {
+	public void render(SpriteBatch s) {
 		if (mainCharacter.isFacingDown())
-			renderFrame(downFrame);
+			renderFrame(downFrame, s);
 		else if (mainCharacter.isFacingLeft())
-			renderFrame(leftFrame);
+			renderFrame(leftFrame, s);
 		else if (mainCharacter.isFacingRight())
-			renderFrame(rightFrame);
+			renderFrame(rightFrame, s);
 		else if (mainCharacter.isFacingUp())
-			renderFrame(upFrame);
+			renderFrame(upFrame, s);
 
 		else if (mainCharacter.isMovingLeft())
-			renderMovement(leftAnimation);
+			renderMovement(leftAnimation, s);
 		else if (mainCharacter.isMovingRight())
-			renderMovement(rightAnimation);
+			renderMovement(rightAnimation, s);
 		else if (mainCharacter.isMovingDown())
-			renderMovement(downAnimation);
+			renderMovement(downAnimation, s);
 		else if (mainCharacter.isMovingUp())
-			renderMovement(upAnimation);
+			renderMovement(upAnimation, s);
 	}
 
 }
