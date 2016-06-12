@@ -20,6 +20,8 @@ public class Game extends ApplicationAdapter {
 		float startingY = 100;
 
 		gameModel = new GameModel(mapName, sheet, startingX, startingY);
+		gameModel.addCharacter("steampunk_f8.png", 352, 232);
+
 		gameRenderer = new GameRenderer(gameModel);
 		inputProcessor = new MovementInputProcessor(gameModel);
 

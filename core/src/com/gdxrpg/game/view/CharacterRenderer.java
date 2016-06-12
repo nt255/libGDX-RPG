@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.gdxrpg.game.model.MainCharacter;
+import com.gdxrpg.game.model.Character;
 
 public class CharacterRenderer {
 
@@ -26,16 +26,16 @@ public class CharacterRenderer {
 	private Animation rightAnimation;
 	private Animation upAnimation;
 
-	private MainCharacter mainCharacter;
+	private Character character;
 
 	public CharacterRenderer(
-			OrthographicCamera camera, MainCharacter mainCharacter) {
-		this.mainCharacter = mainCharacter;
+			OrthographicCamera camera, Character character) {
+		this.character = character;
 
 		stateTime = 0f;
 
 		Texture t = new Texture(
-				Gdx.files.internal(mainCharacter.getAnimationSheet()));
+				Gdx.files.internal(character.getAnimationSheet()));
 		TextureRegion[][] frames = TextureRegion.split(t, 
 				t.getWidth() / SHEET_COLUMNS, t.getHeight() / SHEET_ROWS);
 
@@ -51,8 +51,8 @@ public class CharacterRenderer {
 	}
 
 	private void renderFrame(TextureRegion t, SpriteBatch s) {
-		float x = mainCharacter.getX() - 7;
-		float y = mainCharacter.getY() - 2;
+		float x = character.getX() - 7;
+		float y = character.getY() - 2;
 
 		s.begin();
 		s.draw(t, x, y);
@@ -65,22 +65,22 @@ public class CharacterRenderer {
 	}
 
 	public void render(SpriteBatch s) {
-		if (mainCharacter.isFacingDown())
+		if (character.isFacingDown())
 			renderFrame(downFrame, s);
-		else if (mainCharacter.isFacingLeft())
+		else if (character.isFacingLeft())
 			renderFrame(leftFrame, s);
-		else if (mainCharacter.isFacingRight())
+		else if (character.isFacingRight())
 			renderFrame(rightFrame, s);
-		else if (mainCharacter.isFacingUp())
+		else if (character.isFacingUp())
 			renderFrame(upFrame, s);
 
-		else if (mainCharacter.isMovingLeft())
+		else if (character.isMovingLeft())
 			renderMovement(leftAnimation, s);
-		else if (mainCharacter.isMovingRight())
+		else if (character.isMovingRight())
 			renderMovement(rightAnimation, s);
-		else if (mainCharacter.isMovingDown())
+		else if (character.isMovingDown())
 			renderMovement(downAnimation, s);
-		else if (mainCharacter.isMovingUp())
+		else if (character.isMovingUp())
 			renderMovement(upAnimation, s);
 	}
 

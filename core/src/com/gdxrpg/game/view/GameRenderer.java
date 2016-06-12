@@ -2,8 +2,10 @@ package com.gdxrpg.game.view;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.model.MainCharacter;
+import com.gdxrpg.game.model.Character;
 
 public class GameRenderer {
 
@@ -11,7 +13,8 @@ public class GameRenderer {
 
 	private SpriteBatch spriteBatch;
 	private MainCharacter mainCharacter;
-	private CharacterRenderer characterRenderer;
+	private CharacterRenderer mainCharacterRenderer;
+	private Array<CharacterRenderer> characterRenderers;
 
 	public GameRenderer(GameModel gameModel) {
 		mapRenderer = new MapRenderer(gameModel.getMap());
@@ -22,15 +25,24 @@ public class GameRenderer {
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		mainCharacter = gameModel.getMainCharacter();
-		characterRenderer =
+		mainCharacterRenderer =
 				new CharacterRenderer(camera, mainCharacter);
+
+		characterRenderers = new Array<CharacterRenderer>();
+		for (Character c : gameModel.getCharacters())
+			characterRenderers.add(new CharacterRenderer(camera, c));
 	}
 
 	public void render() {
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();
 
-		characterRenderer.render(spriteBatch);
+		for (CharacterRenderer cr : characterRenderers)
+			cr.render(spriteBatch);
+
+		mapRenderer.renderMidground();
+
+		mainCharacterRenderer.render(spriteBatch);
 
 		float x = mainCharacter.getX();
 		float y = mainCharacter.getY();

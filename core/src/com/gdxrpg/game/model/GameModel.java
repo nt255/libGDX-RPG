@@ -2,15 +2,22 @@ package com.gdxrpg.game.model;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class GameModel {
 
 	private Map map;
 	private MainCharacter mainCharacter;
+	private Array<Character> characters; // NPCs
 
 	public GameModel(String mapName, String sheet, float x, float y) {
 		map = new Map(mapName);
 		mainCharacter = new MainCharacter(sheet, x, y);
+		characters = new Array<Character>();
+	}
+
+	public void addCharacter(String sheet, float x, float y) {
+		characters.add(new Character(sheet, x, y));
 	}
 
 	public void update() {
@@ -47,6 +54,10 @@ public class GameModel {
 
 	public MainCharacter getMainCharacter() {
 		return mainCharacter;
+	}
+
+	public Array<Character> getCharacters() {
+		return characters;
 	}
 
 }
