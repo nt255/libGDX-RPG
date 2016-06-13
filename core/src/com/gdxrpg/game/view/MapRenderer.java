@@ -58,12 +58,7 @@ public class MapRenderer {
 	}
 
 	public void renderBackground() {
-		int[] layers = {0, 1};
-		mapRenderer.render(layers);
-	}
-
-	public void renderMidground() {
-		int[] layers = {2, 3, 4};
+		int[] layers = {0, 1, 2, 3, 4};
 		mapRenderer.render(layers);
 	}
 

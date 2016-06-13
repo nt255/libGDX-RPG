@@ -84,4 +84,20 @@ public class CharacterRenderer {
 			renderMovement(upAnimation, s);
 	}
 
+	public float getX() {
+		return character.getX();
+	}
+
+	public float getY() {
+		return character.getY();
+	}
+
+	public float getCollisionRectangleWidth() {
+		return character.getCollisionRectangleWidth();
+	}
+
+	public float getCollisionRectangleHeight() {
+		return character.getCollisionRectangleHeight();
+	}
+
 }
