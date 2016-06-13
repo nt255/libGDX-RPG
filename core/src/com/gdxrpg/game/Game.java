@@ -21,6 +21,7 @@ public class Game extends ApplicationAdapter {
 
 		gameModel = new GameModel(mapName, sheet, startingX, startingY);
 		gameModel.addCharacter("steampunk_f8.png", 352, 232);
+		gameModel.addCharacter("judgeturpin.png", 190, 255);
 
 		gameRenderer = new GameRenderer(gameModel);
 		inputProcessor = new MovementInputProcessor(gameModel);
