@@ -1,5 +1,6 @@
 package com.gdxrpg.game.model;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Character {
@@ -48,6 +49,13 @@ public class Character {
 
 	public float getCollisionSpeed() {
 		return COLLISION_SPEED;
+	}
+
+	/* for collisions with NPCs */
+	public Rectangle getCollisionRectangle() {
+		return new Rectangle(getX() + 1, getY() + 1,
+				getCollisionRectangleWidth() - 2,
+				getCollisionRectangleHeight() - 2);
 	}
 
 	public String getAnimationSheet() {

@@ -20,6 +20,13 @@ public class GameModel {
 		characters.add(new Character(sheet, x, y));
 	}
 
+	private boolean isCharacterCollision(Rectangle mainCharacter) {
+		for (Character c : characters)
+			if (mainCharacter.overlaps(c.getCollisionRectangle()))
+				return true;
+		return false;
+	}
+
 	public void update() {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
@@ -36,8 +43,10 @@ public class GameModel {
 		Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
 		Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
 
-		boolean noCollisionX = !map.isCollision(playerRectangleX);
-		boolean noCollisionY = !map.isCollision(playerRectangleY);
+		boolean noCollisionX = !map.isCollision(playerRectangleX) &&
+				!isCharacterCollision(playerRectangleX);
+		boolean noCollisionY = !map.isCollision(playerRectangleY) &&
+				!isCharacterCollision(playerRectangleY);
 
 		if (noCollisionX && noCollisionY)
 			mainCharacter.changePosition(vNor.x, vNor.y);
