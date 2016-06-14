@@ -53,8 +53,8 @@ public class Character {
 
 	/* for collisions with NPCs */
 	public Rectangle getCollisionRectangle() {
-		return new Rectangle(getX() + 1, getY() + 1,
-				getCollisionRectangleWidth() - 2,
+		return new Rectangle(getX() + 2, getY() + 1,
+				getCollisionRectangleWidth() - 4,
 				getCollisionRectangleHeight() - 2);
 	}
 
