@@ -2,6 +2,7 @@ package com.gdxrpg.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.view.GameRenderer;
 import com.gdxrpg.game.controller.MovementInputProcessor;
@@ -27,6 +28,10 @@ public class Game extends ApplicationAdapter {
 		inputProcessor = new MovementInputProcessor(gameModel);
 
 		Gdx.input.setInputProcessor(inputProcessor);
+
+		Music m = Gdx.audio.newMusic(
+				Gdx.files.internal("cafe.mp3"));
+		m.play();
 	}
 
 	@Override
