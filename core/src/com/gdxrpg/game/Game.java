@@ -28,6 +28,7 @@ public class Game extends ApplicationAdapter {
 		inputProcessor = new MovementInputProcessor(gameModel);
 
 		Gdx.input.setInputProcessor(inputProcessor);
+		Gdx.graphics.setTitle("libgdx-rpg");
 
 		Music m = Gdx.audio.newMusic(
 				Gdx.files.internal("cafe.mp3"));
