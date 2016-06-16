@@ -2,16 +2,17 @@ package com.gdxrpg.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.view.GameRenderer;
+import com.gdxrpg.game.controller.CameraInputProcessor;
 import com.gdxrpg.game.controller.MovementInputProcessor;
 
 public class Game extends ApplicationAdapter {
 
 	private GameModel gameModel;
 	private GameRenderer gameRenderer;
-	private MovementInputProcessor inputProcessor;
 
 	@Override
 	public void create () {
@@ -25,9 +26,12 @@ public class Game extends ApplicationAdapter {
 		gameModel.addCharacter("judgeturpin.png", 190, 255);
 
 		gameRenderer = new GameRenderer(gameModel);
-		inputProcessor = new MovementInputProcessor(gameModel);
 
-		Gdx.input.setInputProcessor(inputProcessor);
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(new MovementInputProcessor(gameModel));
+		multiplexer.addProcessor(new CameraInputProcessor(gameRenderer));
+
+		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.graphics.setTitle("libgdx-rpg");
 
 		Music m = Gdx.audio.newMusic(

@@ -115,4 +115,9 @@ public class MapRenderer {
 		return camera;
 	}
 
+	public void updateRenderer(OrthographicCamera camera) {
+		mapRenderer.setView(camera);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+	}
+
 }

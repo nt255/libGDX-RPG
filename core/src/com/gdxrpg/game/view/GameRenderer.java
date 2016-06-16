@@ -57,4 +57,13 @@ public class GameRenderer {
 		mapRenderer.renderEdges();
 	}
 
+	public OrthographicCamera getCamera() {
+		return mapRenderer.getCamera();
+	}
+
+	public void updateRenderer(OrthographicCamera camera) {
+		mapRenderer.updateRenderer(camera);
+		spriteBatch.setProjectionMatrix(camera.combined);
+	}
+
 }
