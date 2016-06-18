@@ -34,6 +34,7 @@ public class GameRenderer {
 	public void render() {
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();
+		mapRenderer.renderEdges();
 
 		characterRenderers.sort(new Comparator<CharacterRenderer>() {
 			public int compare(CharacterRenderer r1, CharacterRenderer r2) {
@@ -53,8 +54,6 @@ public class GameRenderer {
 			int h = (int) cr.getCollisionRectangleHeight();
 			mapRenderer.renderForeground(x, y, w, h);
 		}
-
-		mapRenderer.renderEdges();
 	}
 
 	public OrthographicCamera getCamera() {

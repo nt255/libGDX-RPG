@@ -69,6 +69,14 @@ public class Map {
 		return (TiledMapTileLayer) tiledMap.getLayers().get(i);
 	}
 
+	public float getTilePixelWidth() {
+		return tilePixelWidth;
+	}
+
+	public float getTilePixelHeight() {
+		return tilePixelHeight;
+	}
+
 	public float getWidth() {
 		return width;
 	}

@@ -17,9 +17,9 @@ import com.gdxrpg.game.model.Map;
 
 public class MapRenderer {
 
-	private static final float BG_COLOR_RED   = 0.1f;
-	private static final float BG_COLOR_GREEN = 0.1f;
-	private static final float BG_COLOR_BLUE  = 0.1f;
+	private static final float BG_COLOR_RED   = 0.12f;
+	private static final float BG_COLOR_GREEN = 0.12f;
+	private static final float BG_COLOR_BLUE  = 0.12f;
 	private static final float BG_COLOR_ALPHA = 1.0f;
 
 	private static final float CROP_PX_SIDE   = 23f;
@@ -108,6 +108,14 @@ public class MapRenderer {
 		shapeRenderer.rect(0, 0, map.getWidth(), CROP_PX_BOTTOM);
 		shapeRenderer.rect(map.getWidth(), 0, -CROP_PX_SIDE, map.getHeight());
 		shapeRenderer.rect(0, map.getHeight(), map.getWidth(), -CROP_PX_TOP);
+
+		float px = map.getTilePixelWidth();
+		float w = px - CROP_PX_SIDE;
+		shapeRenderer.rect(11*px + w, 0,
+				2 * (px - w), 5*px + CROP_PX_BOTTOM);
+		shapeRenderer.rect(11*px + w, map.getHeight(),
+				2 * (px - w), -3*px - CROP_PX_TOP);
+
 		shapeRenderer.end();
 	}
 

@@ -18,12 +18,12 @@ public class Game extends ApplicationAdapter {
 	public void create () {
 		String mapName = "cafe";
 		String sheet = "pirate_m1.png";
-		float startingX = 300;
+		float startingX = 684;
 		float startingY = 100;
 
 		gameModel = new GameModel(mapName, sheet, startingX, startingY);
-		gameModel.addCharacter("steampunk_f8.png", 352, 232);
-		gameModel.addCharacter("judgeturpin.png", 190, 255);
+		gameModel.addCharacter("steampunk_f8.png", 736, 232);
+		gameModel.addCharacter("judgeturpin.png", 574, 255);
 
 		gameRenderer = new GameRenderer(gameModel);
 
