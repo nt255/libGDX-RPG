@@ -39,7 +39,7 @@ public class MapRenderer {
 		int h = Gdx.graphics.getHeight();
 
 		camera = new OrthographicCamera(w, h);
-		camera.translate(this.map.getWidth() / 2, this.map.getHeight() / 2);
+		// camera.translate(this.map.getWidth() / 2, this.map.getHeight() / 2);
 		camera.update();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(this.map.getTiledMap());

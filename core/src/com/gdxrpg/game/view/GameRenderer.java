@@ -6,26 +6,31 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gdxrpg.game.model.GameModel;
+import com.gdxrpg.game.model.MainCharacter;
 import com.gdxrpg.game.model.Character;
 
 public class GameRenderer {
 
 	private MapRenderer mapRenderer;
+	private OrthographicCamera camera;
+	private CameraRefresher cameraRefresher;
 
 	private SpriteBatch spriteBatch;
 	private Array<CharacterRenderer> characterRenderers;
 
+	private MainCharacter mainCharacter;
+
 	public GameRenderer(GameModel gameModel) {
 		mapRenderer = new MapRenderer(gameModel.getMap());
-
-		OrthographicCamera camera = mapRenderer.getCamera();
+		camera = mapRenderer.getCamera();
+		cameraRefresher = new CameraRefresher(camera);
 
 		spriteBatch = new SpriteBatch();
 		spriteBatch.setProjectionMatrix(camera.combined);
 
+		mainCharacter = gameModel.getMainCharacter();
 		characterRenderers = new Array<CharacterRenderer>();
-		characterRenderers.add(
-				new CharacterRenderer(camera, gameModel.getMainCharacter()));
+		characterRenderers.add(new CharacterRenderer(camera, mainCharacter));
 
 		for (Character c : gameModel.getCharacters())
 			characterRenderers.add(new CharacterRenderer(camera, c));
@@ -54,6 +59,9 @@ public class GameRenderer {
 			int h = (int) cr.getCollisionRectangleHeight();
 			mapRenderer.renderForeground(x, y, w, h);
 		}
+
+		cameraRefresher.refresh(mainCharacter);
+		updateRenderer(camera);
 	}
 
 	public OrthographicCamera getCamera() {

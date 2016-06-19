@@ -18,6 +18,7 @@ public class CameraInputProcessor implements InputProcessor {
 	private void translateCamera(float x, float y) {
 		camera.translate(x, y);
 		camera.update();
+		gameRenderer.updateRenderer(camera);
 	}
 
 	@Override
@@ -30,8 +31,6 @@ public class CameraInputProcessor implements InputProcessor {
 			translateCamera(5, 0);
 		if (keycode == Input.Keys.UP) 
 			translateCamera(0, 5);
-
-		gameRenderer.updateRenderer(camera);
 		return false;
 	}
 
