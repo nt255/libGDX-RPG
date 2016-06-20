@@ -1,11 +1,14 @@
 package com.gdxrpg.game.view;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxrpg.game.model.MainCharacter;
 
 public class CameraRefresher {
+
+	private static final int REQUIRED_FAST_DST = 20;
+	private static final float FAST_RATE = 1.0f;
+	private static final float SLOW_RATE = 0.5f;
 
 	private OrthographicCamera camera;
 
@@ -13,27 +16,24 @@ public class CameraRefresher {
 		this.camera = camera;
 	}
 
+	private void translate(float rate, Vector3 dir, float dst) {
+		dir.scl(rate / dst);
+		camera.position.add(dir);
+		camera.update();
+	}
+
 	protected void refresh(MainCharacter mainCharacter) {
-		Vector3 pos = camera.position;
-		// System.out.println(pos);
+		Vector3 pos = new Vector3();
+		pos.x = mainCharacter.getX();
+		pos.y = mainCharacter.getY();
 
-		Rectangle bounds = new Rectangle(pos.x - 75, pos.y - 75, 150, 150);
+		pos.sub(camera.position);
+		float dst = pos.len();
 
-		while (!mainCharacter.getCollisionRectangle().overlaps(bounds)) {
-			if (mainCharacter.getX() > pos.x + 70)
-				camera.translate(1, 0);
-			else if (mainCharacter.getX() < pos.x - 70)
-				camera.translate(-1, 0);
-
-			if (mainCharacter.getY() > pos.y + 70)
-				camera.translate(0, 1);
-			else if (mainCharacter.getY() < pos.y - 70)
-				camera.translate(0, -1);
-
-			camera.update();
-			pos = camera.position;
-			bounds = new Rectangle(pos.x - 75, pos.y - 75, 150, 150);
-		}
+		if (dst > REQUIRED_FAST_DST)
+			translate(FAST_RATE, pos, dst);
+		else if (dst > 1) // avoids translating when dst very small
+			translate(SLOW_RATE, pos, dst);
 	}
 
 }

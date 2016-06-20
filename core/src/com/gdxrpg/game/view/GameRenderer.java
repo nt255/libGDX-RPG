@@ -29,14 +29,19 @@ public class GameRenderer {
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		mainCharacter = gameModel.getMainCharacter();
+		camera.position.set(mainCharacter.getX(), mainCharacter.getY(), 0);
+		camera.update();
+
 		characterRenderers = new Array<CharacterRenderer>();
 		characterRenderers.add(new CharacterRenderer(camera, mainCharacter));
-
 		for (Character c : gameModel.getCharacters())
 			characterRenderers.add(new CharacterRenderer(camera, c));
 	}
 
 	public void render() {
+		cameraRefresher.refresh(mainCharacter);
+		updateRenderer(camera);
+
 		mapRenderer.setGL();
 		mapRenderer.renderBackground();
 		mapRenderer.renderEdges();
@@ -59,9 +64,6 @@ public class GameRenderer {
 			int h = (int) cr.getCollisionRectangleHeight();
 			mapRenderer.renderForeground(x, y, w, h);
 		}
-
-		cameraRefresher.refresh(mainCharacter);
-		updateRenderer(camera);
 	}
 
 	public OrthographicCamera getCamera() {
