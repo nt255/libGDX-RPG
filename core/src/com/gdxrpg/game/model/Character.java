@@ -51,7 +51,13 @@ public class Character {
 		return COLLISION_SPEED;
 	}
 
-	/* for collisions with NPCs */
+	/**
+	 * Returns rectangle based on character position
+	 * for use with collision detection. Offsets
+	 * rectangle values for improved visuals.
+	 * 
+	 * @return the collision rectangle
+	 */
 	public Rectangle getCollisionRectangle() {
 		return new Rectangle(getX() + 2, getY() + 1,
 				getCollisionRectangleWidth() - 4,

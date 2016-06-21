@@ -43,6 +43,13 @@ public class Map {
 		}
 	}
 
+	/**
+	 * Checks for collisions between mainCharacter and
+	 * any rectangle in collisionRectangles.
+	 * 
+	 * @param mainCharacter rectangle to be checked for collisions
+	 * @return true if at least one collision, otherwise false
+	 */
 	protected boolean isCollision(Rectangle mainCharacter) {
 		for (Rectangle r : collisionRectangles)
 			if (mainCharacter.overlaps(r))
@@ -50,11 +57,21 @@ public class Map {
 		return false;
 	}
 
-	/* converts pixel coordinates to tile coordinates */
+	/**
+	 * @see #getTile(float, float)
+	 */
 	public Vector2 getTile(Vector2 position) {
 		return getTile(position.x, position.y);
 	}
 
+	/**
+	 * Converts pixel coordinates of a map
+	 * to tile coordinates.
+	 * 
+	 * @param x px coordinates along x
+	 * @param y px coordinates along y
+	 * @return the tile coordinates
+	 */
 	public Vector2 getTile(float x, float y) {
 		float tileX = (float) Math.floor(x / tilePixelWidth);
 		float tileY = (float) Math.floor(y / tilePixelHeight);
