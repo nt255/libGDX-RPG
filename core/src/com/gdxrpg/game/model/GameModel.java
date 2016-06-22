@@ -20,11 +20,28 @@ public class GameModel {
 		characters.add(new Character(sheet, x, y));
 	}
 
-	private boolean isCharacterCollision(Rectangle mainCharacter) {
+	/**
+	 * Returns character object which has collided with mainCharacter.
+	 * Otherwise, returns null if there is no collision.
+	 * 
+	 * @param mainCharacter the collision rectangle
+	 * @return the character object or null
+	 */
+	private Character getCharacterCollision(Rectangle mainCharacter) {
 		for (Character c : characters)
 			if (mainCharacter.overlaps(c.getCollisionRectangle()))
-				return true;
-		return false;
+				return c;
+		return null;
+	}
+
+	/**
+	 * @see #getCharacterCollision(Rectangle)
+	 * 
+	 * @param r
+	 * @return true if collision with a character, else false
+	 */
+	private boolean isCharacterCollision(Rectangle r) {
+		return getCharacterCollision(r) != null;
 	}
 
 	public void update() {
