@@ -114,7 +114,7 @@ public class MapRenderer {
 		shapeRenderer.rect(11*px + w, 0,
 				2 * (px - w), 5*px + CROP_PX_BOTTOM);
 		shapeRenderer.rect(11*px + w, map.getHeight(),
-				2 * (px - w), -3*px - CROP_PX_TOP);
+				2 * (px - w), -1*px - CROP_PX_TOP);
 
 		shapeRenderer.end();
 	}
