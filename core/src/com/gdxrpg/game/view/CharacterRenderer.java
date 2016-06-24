@@ -50,6 +50,14 @@ public class CharacterRenderer {
 		upAnimation    = new Animation(FRAME_DURATION, frames[3]);
 	}
 
+	/**
+	 * Draws a TextureRegion with provided SpriteBatch at
+	 * the character's position, offset to be the center
+	 * of area character is visually standing on.
+	 * 
+	 * @param t the TextureRegion
+	 * @param s the SpriteBatch
+	 */
 	private void renderFrame(TextureRegion t, SpriteBatch s) {
 		float x = character.getX() - 7;
 		float y = character.getY() - 2;
@@ -59,6 +67,14 @@ public class CharacterRenderer {
 		s.end();
 	}
 
+	/**
+	 * Draws a single frame from Animation with provided
+	 * SpriteBatch based on the elapsed time.
+	 * @see #renderFrame(TextureRegion, SpriteBatch)
+	 * 
+	 * @param a the Animation
+	 * @param s the SpriteBatch
+	 */
 	private void renderMovement(Animation a, SpriteBatch s) {
 		stateTime += Gdx.graphics.getDeltaTime();
 		renderFrame(a.getKeyFrame(stateTime, true), s);
