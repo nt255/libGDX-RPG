@@ -77,6 +77,23 @@ public class GameModel {
 			Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
 			Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
 
+			Character charX = getCharacterCollision(playerRectangleX, c);
+			Character charY = getCharacterCollision(playerRectangleY, c);
+
+			if (charX != null) {
+				if (charX.getX() > mainCharacter.getX())
+					charX.accelerateRight();
+				else
+					charX.accelerateLeft();
+			}
+
+			if (charY != null) {
+				if (charY.getY() > mainCharacter.getY())
+					charY.accelerateUp();
+				else
+					charY.accelerateDown();
+			}
+
 			boolean noCollisionX = !map.isCollision(playerRectangleX) &&
 					!isCharacterCollision(playerRectangleX);
 			boolean noCollisionY = !map.isCollision(playerRectangleY) &&
