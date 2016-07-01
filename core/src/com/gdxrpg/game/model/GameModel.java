@@ -28,16 +28,23 @@ public class GameModel {
 	}
 
 	/**
-	 * Returns character object which has collided with mainCharacter.
-	 * Otherwise, returns null if there is no collision.
+	 * Returns character object which has collided with rectangle.
+	 * Otherwise, returns null if there is no collision. Does not
+	 * check for overlap with (it)self.
 	 * 
-	 * @param mainCharacter the collision rectangle
+	 * @param r the collision rectangle
+	 * @param self character to not check for overlap with
 	 * @return the character object or null
 	 */
-	private Character getCharacterCollision(Rectangle mainCharacter) {
-		for (Character c : characters)
-			if (mainCharacter.overlaps(c.getCollisionRectangle()))
+	private Character getCharacterCollision(Rectangle r, Character self) {
+		for (Character c : characters) {
+			boolean isSelf = false;
+			if (self != null)
+				isSelf = c.getX() == self.getX() && c.getY() == self.getY();
+
+			if (r.overlaps(c.getCollisionRectangle()) && !isSelf)
 				return c;
+		}
 		return null;
 	}
 
@@ -48,7 +55,7 @@ public class GameModel {
 	 * @return true if collision with a character, else false
 	 */
 	private boolean isCharacterCollision(Rectangle r) {
-		return getCharacterCollision(r) != null;
+		return getCharacterCollision(r, null) != null;
 	}
 
 	public void update() {
