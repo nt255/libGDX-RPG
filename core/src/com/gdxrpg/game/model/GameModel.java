@@ -38,11 +38,8 @@ public class GameModel {
 	 */
 	private Character getCharacterCollision(Rectangle r, Character self) {
 		for (Character c : characters) {
-			boolean isSelf = false;
-			if (self != null)
-				isSelf = c.getX() == self.getX() && c.getY() == self.getY();
-
-			if (r.overlaps(c.getCollisionRectangle()) && !isSelf)
+			boolean isNotItself = self == null || !self.equals(c);
+			if (r.overlaps(c.getCollisionRectangle()) && isNotItself)
 				return c;
 		}
 		return null;
