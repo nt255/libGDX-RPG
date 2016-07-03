@@ -8,23 +8,17 @@ public class GameModel {
 
 	private Map map;
 	private MainCharacter mainCharacter;
-
 	private Array<Character> characters; // NPCs
-	private Array<Character> allCharacters;
 
 	public GameModel(String mapName, String sheet, float x, float y) {
 		map = new Map(mapName);
 		mainCharacter = new MainCharacter(sheet, x, y);
-
 		characters = new Array<Character>();
-		allCharacters = new Array<Character>();
-		allCharacters.add(mainCharacter);
 	}
 
 	public void addCharacter(String sheet, float x, float y) {
 		Character c = new Character(sheet, x, y);
 		characters.add(c);
-		allCharacters.add(c);
 	}
 
 	/**
@@ -46,51 +40,50 @@ public class GameModel {
 	}
 
 	public void update() {
+		Vector2 pos = mainCharacter.getPosition();
+		Vector2 vNor = mainCharacter.getVelocityNor();
 
-		for (Character c : allCharacters) {
+		// Vector2 tilePos = map.getTile(pos);
+		// System.out.println((int) tilePos.x + ", " + (int) tilePos.y);
 
-			Vector2 pos = c.getPosition();
-			Vector2 vNor = c.getVelocityNor();
+		Vector2 newPosX = new Vector2(pos).add(vNor.x, 0);
+		Vector2 newPosY = new Vector2(pos).add(0, vNor.y);
 
-			// Vector2 tilePos = map.getTile(pos);
-			// System.out.println((int) tilePos.x + ", " + (int) tilePos.y);
+		float w = mainCharacter.getCollisionRectangleWidth();
+		float h = mainCharacter.getCollisionRectangleHeight();
 
-			Vector2 newPosX = new Vector2(pos).add(vNor.x, 0);
-			Vector2 newPosY = new Vector2(pos).add(0, vNor.y);
+		Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
+		Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
 
-			float w = c.getCollisionRectangleWidth();
-			float h = c.getCollisionRectangleHeight();
+		Character charX = getCharacterCollision(playerRectangleX, mainCharacter);
+		Character charY = getCharacterCollision(playerRectangleY, mainCharacter);
 
-			Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
-			Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
-
-			Character charX = getCharacterCollision(playerRectangleX, c);
-			Character charY = getCharacterCollision(playerRectangleY, c);
-
-			if (charX != null) {
-				if (charX.getX() > mainCharacter.getX())
-					charX.accelerateRight();
-				else
-					charX.accelerateLeft();
-			}
-
-			if (charY != null) {
-				if (charY.getY() > mainCharacter.getY())
-					charY.accelerateUp();
-				else
-					charY.accelerateDown();
-			}
-
-			boolean noCollisionX = !map.isCollision(playerRectangleX);
-			boolean noCollisionY = !map.isCollision(playerRectangleY);
-
-			if (noCollisionX && noCollisionY)
-				c.changePosition(vNor.x, vNor.y);
-			else if (noCollisionX)
-				c.changePosition(vNor.x, 0);
-			else if (noCollisionY)
-				c.changePosition(0, vNor.y * c.getCollisionSpeed());
+		if (charX != null) {
+			if (charX.getX() > mainCharacter.getX())
+				System.out.println("right");
+			else
+				System.out.println("left");
 		}
+
+		if (charY != null) {
+			if (charY.getY() > mainCharacter.getY())
+				System.out.println("up");
+			else
+				System.out.println("down");
+		}
+
+		boolean noCollisionX = !map.isCollision(playerRectangleX) &&
+				charX == null;
+		boolean noCollisionY = !map.isCollision(playerRectangleY) &&
+				charY == null;
+
+		if (noCollisionX && noCollisionY)
+			mainCharacter.changePosition(vNor.x, vNor.y);
+		else if (noCollisionX)
+			mainCharacter.changePosition(vNor.x, 0);
+		else if (noCollisionY)
+			mainCharacter.changePosition(0, vNor.y *
+					mainCharacter.getCollisionSpeed());
 	}
 
 	public Map getMap() {
