@@ -39,20 +39,10 @@ public class GameModel {
 	private Character getCharacterCollision(Rectangle r, Character self) {
 		for (Character c : characters) {
 			boolean isNotItself = self == null || !self.equals(c);
-			if (r.overlaps(c.getCollisionRectangle()) && isNotItself)
+			if (isNotItself && r.overlaps(c.getCollisionRectangle()))
 				return c;
 		}
 		return null;
-	}
-
-	/**
-	 * @see #getCharacterCollision(Rectangle)
-	 * 
-	 * @param r
-	 * @return true if collision with a character, else false
-	 */
-	private boolean isCharacterCollision(Rectangle r) {
-		return getCharacterCollision(r, null) != null;
 	}
 
 	public void update() {
@@ -91,10 +81,8 @@ public class GameModel {
 					charY.accelerateDown();
 			}
 
-			boolean noCollisionX = !map.isCollision(playerRectangleX) &&
-					!isCharacterCollision(playerRectangleX);
-			boolean noCollisionY = !map.isCollision(playerRectangleY) &&
-					!isCharacterCollision(playerRectangleY);
+			boolean noCollisionX = !map.isCollision(playerRectangleX);
+			boolean noCollisionY = !map.isCollision(playerRectangleY);
 
 			if (noCollisionX && noCollisionY)
 				c.changePosition(vNor.x, vNor.y);
