@@ -60,16 +60,16 @@ public class GameModel {
 
 		if (charX != null) {
 			if (charX.getX() > mainCharacter.getX())
-				System.out.println("right");
+				charX.pushRight();
 			else
-				System.out.println("left");
+				charX.pushLeft();
 		}
 
 		if (charY != null) {
 			if (charY.getY() > mainCharacter.getY())
-				System.out.println("up");
+				charY.pushUp();
 			else
-				System.out.println("down");
+				charY.pushDown();
 		}
 
 		boolean noCollisionX = !map.isCollision(playerRectangleX) &&

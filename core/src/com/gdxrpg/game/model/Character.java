@@ -9,6 +9,11 @@ public class Character {
 	private static final float COLLISION_RECTANGLE_HEIGHT = 13;
 	private static final float COLLISION_SPEED = 0.7f;
 
+	/**
+	 * Speed NPCs move at when run into.
+	 */
+	private static final float PUSH_SPEED = 0.5f;
+
 	private String animationSheet;
 
 	private boolean facingDown = true; // faces down by default
@@ -113,6 +118,22 @@ public class Character {
 			facingDown = true;
 		else
 			setMoving();
+	}
+
+	public void pushDown() {
+		position.add(0, -PUSH_SPEED);
+	}
+
+	public void pushLeft() {
+		position.add(-PUSH_SPEED, 0);
+	}
+
+	public void pushRight() {
+		position.add(PUSH_SPEED, 0);
+	}
+
+	public void pushUp() {
+		position.add(0, PUSH_SPEED);
 	}
 
 	public boolean isFacingDown() {
