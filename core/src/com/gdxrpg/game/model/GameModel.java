@@ -58,9 +58,19 @@ public class GameModel {
 		Character charX = getCharacterCollision(playerRectangleX, mainCharacter);
 		Character charY = getCharacterCollision(playerRectangleY, mainCharacter);
 
+		Vector2 posTmp;
+		Vector2 newPosTmp;
+
 		if (charX != null) {
-			if (charX.getX() > mainCharacter.getX())
-				charX.pushRight();
+			if (charX.getX() > mainCharacter.getX()) {
+				posTmp = charX.getPosition();
+				newPosTmp = new Vector2(posTmp).add(0.5f, 0);
+
+				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
+
+				if (!map.isCollision(r))
+					charX.pushRight();
+			}
 			else
 				charX.pushLeft();
 		}
