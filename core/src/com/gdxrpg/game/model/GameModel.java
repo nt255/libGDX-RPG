@@ -71,15 +71,36 @@ public class GameModel {
 				if (!map.isCollision(r))
 					charX.pushRight();
 			}
-			else
-				charX.pushLeft();
+			else {
+				posTmp = charX.getPosition();
+				newPosTmp = new Vector2(posTmp).add(-0.5f, 0);
+
+				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
+
+				if (!map.isCollision(r))
+					charX.pushLeft();
+			}
 		}
 
 		if (charY != null) {
-			if (charY.getY() > mainCharacter.getY())
-				charY.pushUp();
-			else
-				charY.pushDown();
+			if (charY.getY() > mainCharacter.getY()) {
+				posTmp = charY.getPosition();
+				newPosTmp = new Vector2(posTmp).add(0.5f, 0);
+
+				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
+
+				if (!map.isCollision(r))
+					charY.pushUp();
+			}
+			else {
+				posTmp = charY.getPosition();
+				newPosTmp = new Vector2(posTmp).add(-0.5f, 0);
+
+				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
+
+				if (!map.isCollision(r))
+					charY.pushDown();
+			}
 		}
 
 		boolean noCollisionX = !map.isCollision(playerRectangleX) &&
