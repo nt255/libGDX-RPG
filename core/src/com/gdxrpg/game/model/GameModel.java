@@ -39,6 +39,18 @@ public class GameModel {
 		return null;
 	}
 
+	private boolean isFutureCollision(Character c, Vector2 v) {
+		Vector2 pos = c.getPosition();
+		Vector2 newPos = new Vector2(pos).add(v);
+
+		float w = c.getCollisionRectangleWidth();
+		float h = c.getCollisionRectangleHeight();
+
+		Rectangle r = new Rectangle(newPos.x, newPos.y, w, h);
+
+		return map.isCollision(r);
+	}
+
 	public void update() {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
@@ -58,47 +70,24 @@ public class GameModel {
 		Character charX = getCharacterCollision(playerRectangleX, mainCharacter);
 		Character charY = getCharacterCollision(playerRectangleY, mainCharacter);
 
-		Vector2 posTmp;
-		Vector2 newPosTmp;
-
 		if (charX != null) {
 			if (charX.getX() > mainCharacter.getX()) {
-				posTmp = charX.getPosition();
-				newPosTmp = new Vector2(posTmp).add(0.5f, 0);
-
-				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
-
-				if (!map.isCollision(r))
+				if (!isFutureCollision(charX, new Vector2(0.5f, 0)))
 					charX.pushRight();
 			}
 			else {
-				posTmp = charX.getPosition();
-				newPosTmp = new Vector2(posTmp).add(-0.5f, 0);
-
-				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
-
-				if (!map.isCollision(r))
+				if (!isFutureCollision(charX, new Vector2(-0.5f, 0)))
 					charX.pushLeft();
 			}
 		}
 
 		if (charY != null) {
 			if (charY.getY() > mainCharacter.getY()) {
-				posTmp = charY.getPosition();
-				newPosTmp = new Vector2(posTmp).add(0.5f, 0);
-
-				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
-
-				if (!map.isCollision(r))
+				if (!isFutureCollision(charY, new Vector2(0, 0.5f)))
 					charY.pushUp();
 			}
 			else {
-				posTmp = charY.getPosition();
-				newPosTmp = new Vector2(posTmp).add(-0.5f, 0);
-
-				Rectangle r = new Rectangle(newPosTmp.x, newPosTmp.y, w, h);
-
-				if (!map.isCollision(r))
+				if (!isFutureCollision(charY, new Vector2(0, -0.5f)))
 					charY.pushDown();
 			}
 		}
