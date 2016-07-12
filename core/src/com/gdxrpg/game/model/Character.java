@@ -56,6 +56,10 @@ public class Character {
 		return COLLISION_SPEED;
 	}
 
+	public float getPushSpeed() {
+		return PUSH_SPEED;
+	}
+
 	/**
 	 * Returns rectangle based on character position
 	 * for use with collision detection. Offsets
