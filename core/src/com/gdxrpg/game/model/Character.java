@@ -13,6 +13,7 @@ public class Character {
 	 * Speed NPCs move at when run into.
 	 */
 	private static final float PUSH_SPEED = 0.5f;
+	private static final boolean IS_PUSHABLE = true;
 
 	private String animationSheet;
 
@@ -58,6 +59,10 @@ public class Character {
 
 	public float getPushSpeed() {
 		return PUSH_SPEED;
+	}
+
+	public boolean isPushable() {
+		return IS_PUSHABLE;
 	}
 
 	/**

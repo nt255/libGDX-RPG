@@ -51,6 +51,30 @@ public class GameModel {
 		return map.isCollision(r);
 	}
 
+	private void pushCharacterOnCollision(Character charX, Character charY) {
+		if (charX != null && charX.isPushable()) {
+			float ps = charX.getPushSpeed();
+			if (charX.getX() > mainCharacter.getX()) {
+				if (!isFutureCollision(charX, new Vector2(ps, 0)))
+					charX.pushRight();
+			}
+			else
+				if (!isFutureCollision(charX, new Vector2(-ps, 0)))
+					charX.pushLeft();
+		}
+
+		if (charY != null && charY.isPushable()) {
+			float ps = charY.getPushSpeed();
+			if (charY.getY() > mainCharacter.getY()) {
+				if (!isFutureCollision(charY, new Vector2(0, ps)))
+					charY.pushUp();
+			}
+			else
+				if (!isFutureCollision(charY, new Vector2(0, -ps)))
+					charY.pushDown();
+		}
+	}
+
 	public void update() {
 		Vector2 pos = mainCharacter.getPosition();
 		Vector2 vNor = mainCharacter.getVelocityNor();
@@ -70,27 +94,7 @@ public class GameModel {
 		Character charX = getCharacterCollision(playerRectangleX, mainCharacter);
 		Character charY = getCharacterCollision(playerRectangleY, mainCharacter);
 
-		if (charX != null) {
-			float ps = charX.getPushSpeed();
-			if (charX.getX() > mainCharacter.getX()) {
-				if (!isFutureCollision(charX, new Vector2(ps, 0)))
-					charX.pushRight();
-			}
-			else
-				if (!isFutureCollision(charX, new Vector2(-ps, 0)))
-					charX.pushLeft();
-		}
-
-		if (charY != null) {
-			float ps = charY.getPushSpeed();
-			if (charY.getY() > mainCharacter.getY()) {
-				if (!isFutureCollision(charY, new Vector2(0, ps)))
-					charY.pushUp();
-			}
-			else
-				if (!isFutureCollision(charY, new Vector2(0, -ps)))
-					charY.pushDown();
-		}
+		pushCharacterOnCollision(charX, charY);
 
 		boolean noCollisionX = !map.isCollision(playerRectangleX) &&
 				charX == null;
