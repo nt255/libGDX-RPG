@@ -39,6 +39,14 @@ public class GameModel {
 		return null;
 	}
 
+	/**
+	 * Returns true if provided character will collide with
+	 * something on the map given velocity v.
+	 * 
+	 * @param c the character object
+	 * @param v the velocity vector applied to c
+	 * @return true if c (w/ v) will collide, otherwise false
+	 */
 	private boolean isFutureCollision(Character c, Vector2 v) {
 		Vector2 pos = c.getPosition();
 		Vector2 newPos = new Vector2(pos).add(v);
@@ -51,6 +59,15 @@ public class GameModel {
 		return map.isCollision(r);
 	}
 
+	/**
+	 * Changes position of charX (and charY) based on the
+	 * position of mainCharacter by PUSH_SPEED of character.
+	 * 
+	 * @param charX the character which has collided with
+	 *              mainCharacter horizontally
+	 * @param charY the character which has collided with
+	 *              mainCharacter vertically
+	 */
 	private void pushCharacterOnCollision(Character charX, Character charY) {
 		if (charX != null && charX.isPushable()) {
 			float ps = charX.getPushSpeed();
