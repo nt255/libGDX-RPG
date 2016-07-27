@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.view.GameRenderer;
-import com.gdxrpg.game.controller.CameraInputProcessor;
 import com.gdxrpg.game.controller.MovementInputProcessor;
 
 public class Game extends ApplicationAdapter {
@@ -29,7 +28,7 @@ public class Game extends ApplicationAdapter {
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new MovementInputProcessor(gameModel));
-		multiplexer.addProcessor(new CameraInputProcessor(gameRenderer));
+		// multiplexer.addProcessor(new CameraInputProcessor(gameRenderer));
 
 		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.graphics.setTitle("libgdx-rpg");
