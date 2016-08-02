@@ -6,19 +6,10 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameModel {
 
-	private Map map;
-	private MainCharacter mainCharacter;
-	private Array<Character> characters; // NPCs
+	private Area area;
 
-	public GameModel(String mapName, String sheet, float x, float y) {
-		map = new Map(mapName);
-		mainCharacter = new MainCharacter(sheet, x, y);
-		characters = new Array<Character>();
-	}
-
-	public void addCharacter(String sheet, float x, float y) {
-		Character c = new Character(sheet, x, y);
-		characters.add(c);
+	public GameModel(Area area) {
+		this.area = area;
 	}
 
 	/**
@@ -31,7 +22,7 @@ public class GameModel {
 	 * @return the character object or null
 	 */
 	private Character getCharacterCollision(Rectangle r, Character self) {
-		for (Character c : characters) {
+		for (Character c : area.getCharacters()) {
 			boolean isNotItself = self == null || !self.equals(c);
 			if (isNotItself && r.overlaps(c.getCollisionRectangle()))
 				return c;
@@ -56,7 +47,7 @@ public class GameModel {
 
 		Rectangle r = new Rectangle(newPos.x, newPos.y, w, h);
 
-		return map.isCollision(r);
+		return area.getMap().isCollision(r);
 	}
 
 	/**
@@ -71,7 +62,7 @@ public class GameModel {
 	private void pushCharacterOnCollision(Character charX, Character charY) {
 		if (charX != null && charX.isPushable()) {
 			float ps = charX.getPushSpeed();
-			if (charX.getX() > mainCharacter.getX()) {
+			if (charX.getX() > area.getMainCharacter().getX()) {
 				if (!isFutureCollision(charX, new Vector2(ps, 0)))
 					charX.pushRight();
 			}
@@ -82,7 +73,7 @@ public class GameModel {
 
 		if (charY != null && charY.isPushable()) {
 			float ps = charY.getPushSpeed();
-			if (charY.getY() > mainCharacter.getY()) {
+			if (charY.getY() > area.getMainCharacter().getY()) {
 				if (!isFutureCollision(charY, new Vector2(0, ps)))
 					charY.pushUp();
 			}
@@ -93,8 +84,8 @@ public class GameModel {
 	}
 
 	public void update() {
-		Vector2 pos = mainCharacter.getPosition();
-		Vector2 vNor = mainCharacter.getVelocityNor();
+		Vector2 pos = area.getMainCharacter().getPosition();
+		Vector2 vNor = area.getMainCharacter().getVelocityNor();
 
 		// Vector2 tilePos = map.getTile(pos);
 		// System.out.println((int) tilePos.x + ", " + (int) tilePos.y);
@@ -102,41 +93,41 @@ public class GameModel {
 		Vector2 newPosX = new Vector2(pos).add(vNor.x, 0);
 		Vector2 newPosY = new Vector2(pos).add(0, vNor.y);
 
-		float w = mainCharacter.getCollisionRectangleWidth();
-		float h = mainCharacter.getCollisionRectangleHeight();
+		float w = area.getMainCharacter().getCollisionRectangleWidth();
+		float h = area.getMainCharacter().getCollisionRectangleHeight();
 
 		Rectangle playerRectangleX = new Rectangle(newPosX.x, newPosX.y, w, h);
 		Rectangle playerRectangleY = new Rectangle(newPosY.x, newPosY.y, w, h);
 
-		Character charX = getCharacterCollision(playerRectangleX, mainCharacter);
-		Character charY = getCharacterCollision(playerRectangleY, mainCharacter);
+		Character charX = getCharacterCollision(playerRectangleX, area.getMainCharacter());
+		Character charY = getCharacterCollision(playerRectangleY, area.getMainCharacter());
 
 		pushCharacterOnCollision(charX, charY);
 
-		boolean noCollisionX = !map.isCollision(playerRectangleX) &&
+		boolean noCollisionX = !area.getMap().isCollision(playerRectangleX) &&
 				charX == null;
-		boolean noCollisionY = !map.isCollision(playerRectangleY) &&
+		boolean noCollisionY = !area.getMap().isCollision(playerRectangleY) &&
 				charY == null;
 
 		if (noCollisionX && noCollisionY)
-			mainCharacter.changePosition(vNor.x, vNor.y);
+			area.getMainCharacter().changePosition(vNor.x, vNor.y);
 		else if (noCollisionX)
-			mainCharacter.changePosition(vNor.x, 0);
+			area.getMainCharacter().changePosition(vNor.x, 0);
 		else if (noCollisionY)
-			mainCharacter.changePosition(0, vNor.y *
-					mainCharacter.getCollisionSpeed());
+			area.getMainCharacter().changePosition(0, vNor.y *
+					area.getMainCharacter().getCollisionSpeed());
 	}
 
 	public Map getMap() {
-		return map;
+		return area.getMap();
 	}
 
 	public MainCharacter getMainCharacter() {
-		return mainCharacter;
+		return area.getMainCharacter();
 	}
 
 	public Array<Character> getCharacters() {
-		return characters;
+		return area.getCharacters();
 	}
 
 }

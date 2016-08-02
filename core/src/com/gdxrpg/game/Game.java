@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
+import com.gdxrpg.game.model.Area;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.view.GameRenderer;
 import com.gdxrpg.game.controller.MovementInputProcessor;
@@ -20,10 +21,11 @@ public class Game extends ApplicationAdapter {
 		float startingX = 684;
 		float startingY = 100;
 
-		gameModel = new GameModel(mapName, sheet, startingX, startingY);
-		gameModel.addCharacter("steampunk_f8.png", 736, 232);
-		gameModel.addCharacter("judgeturpin.png", 574, 255);
+		Area area = new Area(mapName, sheet, startingX, startingY);
+		area.addCharacter("steampunk_f8.png", 736, 232);
+		area.addCharacter("judgeturpin.png", 574, 255);
 
+		gameModel = new GameModel(area);
 		gameRenderer = new GameRenderer(gameModel);
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
