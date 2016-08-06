@@ -22,6 +22,7 @@ public class Map {
 	private float height;
 
 	private Array<Rectangle> collisionRectangles;
+	private Array<RectangleMapObject> portalRectangles;
 
 	protected Map(String mapName) {
 		tiledMap = new TmxMapLoader().load(mapName + ".tmx");
@@ -41,6 +42,10 @@ public class Map {
 			Rectangle r = ((RectangleMapObject) obj).getRectangle();
 			collisionRectangles.add(r);
 		}
+
+		MapLayer portalLayer = tiledMap.getLayers().get("portals");
+		MapObjects portalObjects = portalLayer.getObjects();
+		portalRectangles = portalObjects.getByType(RectangleMapObject.class);
 	}
 
 	/**
@@ -55,6 +60,21 @@ public class Map {
 			if (mainCharacter.overlaps(r))
 				return true;
 		return false;
+	}
+
+	/**
+	 * Checks if mainCharacter is over a portal. If so,
+	 * prints message containing the portal's name.
+	 * 
+	 * @see #isCollision(Rectangle)
+	 * 
+	 * @param mainCharacter the player character
+	 * @return true if over one or more portal(s), otherwise false
+	 */
+	protected void isOnPortal(Rectangle mainCharacter) {
+		for (RectangleMapObject r : portalRectangles)
+			if (mainCharacter.overlaps(r.getRectangle()))
+				System.out.println("portal: " + r.getName());
 	}
 
 	/**

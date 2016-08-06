@@ -116,6 +116,9 @@ public class GameModel {
 		else if (noCollisionY)
 			area.getMainCharacter().changePosition(0, vNor.y *
 					area.getMainCharacter().getCollisionSpeed());
+
+		Rectangle playerRectangle = new Rectangle(pos.x, pos.y, w, h);
+		area.getMap().isOnPortal(playerRectangle);
 	}
 
 	public Map getMap() {
