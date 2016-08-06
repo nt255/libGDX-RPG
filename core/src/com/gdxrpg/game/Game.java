@@ -3,7 +3,7 @@ package com.gdxrpg.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.audio.Music;
+// import com.badlogic.gdx.audio.Music;
 import com.gdxrpg.game.model.Area;
 import com.gdxrpg.game.model.GameModel;
 import com.gdxrpg.game.view.GameRenderer;
@@ -35,9 +35,11 @@ public class Game extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.graphics.setTitle("libgdx-rpg");
 
+		/*
 		Music m = Gdx.audio.newMusic(
 				Gdx.files.internal("cafe.mp3"));
 		m.play();
+		 */
 	}
 
 	@Override
