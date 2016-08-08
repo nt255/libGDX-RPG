@@ -9,10 +9,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.gdxrpg.game.model.Map;
 
 public class MapRenderer {
@@ -22,15 +28,13 @@ public class MapRenderer {
 	private static final float BG_COLOR_BLUE  = 0.12f;
 	private static final float BG_COLOR_ALPHA = 1.0f;
 
-	private static final float CROP_PX_SIDE   = 23f;
-	private static final float CROP_PX_TOP    = 17f;
-	private static final float CROP_PX_BOTTOM = 16f;
-
 	private OrthographicCamera camera;
 	private TiledMapRenderer mapRenderer;
 	private ShapeRenderer shapeRenderer;
 
 	private Map map;
+
+	private Array<Rectangle> edgeRectangles;
 
 	public MapRenderer(Map map) {
 		this.map = map;
@@ -49,6 +53,15 @@ public class MapRenderer {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.setColor(BG_COLOR_RED, BG_COLOR_GREEN,
 				BG_COLOR_BLUE, BG_COLOR_ALPHA);
+
+		MapLayer edgeLayer = map.getTiledMap().getLayers().get("edges");
+		MapObjects edgeObjects = edgeLayer.getObjects();
+
+		edgeRectangles = new Array<Rectangle>();
+		for (MapObject obj : edgeObjects) {
+			Rectangle r = ((RectangleMapObject) obj).getRectangle();
+			edgeRectangles.add(r);
+		}
 	}
 
 	public void setGL() {
@@ -104,18 +117,9 @@ public class MapRenderer {
 
 	public void renderEdges() {
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.rect(0, 0, CROP_PX_SIDE, map.getHeight());
-		shapeRenderer.rect(0, 0, map.getWidth(), CROP_PX_BOTTOM);
-		shapeRenderer.rect(map.getWidth(), 0, -CROP_PX_SIDE, map.getHeight());
-		shapeRenderer.rect(0, map.getHeight(), map.getWidth(), -CROP_PX_TOP);
-
-		float px = map.getTilePixelWidth();
-		float w = px - CROP_PX_SIDE;
-		shapeRenderer.rect(11*px + w, 0,
-				2 * (px - w), 5*px + CROP_PX_BOTTOM);
-		shapeRenderer.rect(11*px + w, map.getHeight(),
-				2 * (px - w), -1*px - CROP_PX_TOP);
-
+		for (Rectangle r : edgeRectangles)
+			shapeRenderer.rect(
+					r.getX(), r.getY(), r.getWidth(), r.getHeight());
 		shapeRenderer.end();
 	}
 
